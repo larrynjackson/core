@@ -1,0 +1,51 @@
+
+
+
+
+               ZERO                        DBYTE   0  
+               ONE                         DBYTE   1  
+
+
+               MULLOOP:HI                  DBYTE   0  
+               MULLOOP:LO                  DBYTE   24  
+               SETSTACK:HI                 DBYTE   0  
+               SETSTACK:LO                 DBYTE   15  
+               MULTIPLY:HI                 DBYTE   0  
+               MULTIPLY:LO                 DBYTE   19  
+
+
+00000  0x9700                    LDI       R7 SETSTACK:HI 
+00001  0x47F0                    SHL       R7 R7 8 
+00002  0x6F0F                    ADDI      R7 SETSTACK:LO 
+00003  0xDF00                    CALL      R7 
+00004  0x9437                    LDI       R4 55 
+00005  0x9507                    LDI       R5 7 
+00006  0xAC00                    PUSH      R4 
+00007  0xAD00                    PUSH      R5 
+00008  0x9700                    LDI       R7 MULTIPLY:HI 
+00009  0x47F0                    SHL       R7 R7 8 
+00010  0x6F13                    ADDI      R7 MULTIPLY:LO 
+00011  0xD000                    NOOP      
+00012  0xDF00                    CALL      R7 
+00013  0xB000                    POP       R0 
+00014  0x0000                    HALT      
+00015  0x9000  SETSTACK:         LDI       R0 0 
+00016  0x5000                    NOT       R0 R0 
+00017  0xC800                    LDSR      R0 
+00018  0xE000                    RTRN      
+00019  0xB000  MULTIPLY:         POP       R0 
+00020  0xB500                    POP       R5 
+00021  0xB400                    POP       R4 
+00022  0xD000                    NOOP      
+00023  0x9600                    LDI       R6 0 
+00024  0x0ED0  MULLOOP:          ADD       R6 R6 R4 
+00025  0x7501                    SUBI      R5 1 
+00026  0xD000                    NOOP      
+00027  0x9D00                    CMPI      R5 0 
+00028  0x9700                    LDI       R7 MULLOOP:HI 
+00029  0x47F0                    SHL       R7 R7 8 
+00030  0x6F18                    ADDI      R7 MULLOOP:LO 
+00031  0x6720                    BFLAG     R7 NE 
+00032  0xAE00                    PUSH      R6 
+00033  0xA800                    PUSH      R0 
+00034  0xE000                    RTRN      
