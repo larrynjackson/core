@@ -12,15 +12,17 @@
 
 
 
-    ZERO:           DBYTE       0
-    ONE:            DBYTE       1
+    ZERO:            DBYTE       0
+    ONE:             DBYTE       1
+    multiplicand:    DBYTE       55
+    multiplier:      DBYTE       7
 
-                   
+                 
                     ; multiply subroutine
 
    
                     ldi     r7 setstack:HI
-                    shl     r7 8
+                    shl     r7 r7 8
                     addi    r7 setstack:LO
                     call    r7
         
@@ -33,20 +35,20 @@
                     ; push to the stack, multiplicand then multiplier
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-                    ldi     r4 55       ;multiplicand
-                    ldi     r5 7        ;multiplier
+                    ldi     r4 multiplicand      ;multiplicand
+                    ldi     r5 multiplier        ;multiplier
                     push    r4
                     push    r5
                     ;noop
 
                     ldi     r7 multiply:HI
-                    shl     r7 8
+                    shl     r7 r7 8
                     addi    r7 multiply:LO
                     noop
                     call    r7
 
                     pop     r0
-                    out     r0
+                    ;out     r0
                     
                     HALT
 
@@ -56,7 +58,7 @@
                     ; destroys r0 contents
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    setstack:       ldi     r0 0
+    setstack:       ldi     r0 ZERO
                     not     r0 r0
                     ldsr    r0
                     rtrn
@@ -80,13 +82,13 @@
                     pop     r4  ; multiplicand
                     noop
                     
-                    ldi     r6 0
+                    ldi     r6 ZERO
     mulloop:        add     r6 r6 r4
-                    subi    r5 1
+                    subi    r5 ONE
                     noop
-                    cmpi    r5 0
+                    cmpi    r5 ZERO
                     ldi     r7 mulloop:HI
-                    shl     r7 8
+                    shl     r7 r7 8
                     addi    r7 mulloop:LO
                     bflag   r7 ne
                     push    r6         ; answer

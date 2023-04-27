@@ -23,21 +23,18 @@ func (core *Config) twoRegister(count int) int {
 	case 7:
 		if core.Opcode == "CMP" {
 			core.genRegHandler(int(reg1), "closetop")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.RegValues[B1] = core.RegValues[reg1]
 
 			core.genRegHandler(int(reg2), "closebot")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.RegValues[B2] = core.RegValues[reg2]
 			core.busHandler(int(B1))
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.busHandler(int(B2))
 			time.Sleep(core.SleepTime * time.Millisecond)
 		} else if core.Opcode == "NOT" {
 			core.genRegHandler(int(reg2), "closetop")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.RegValues[B1] = core.RegValues[reg1]
 			core.busHandler(int(B1))
+			time.Sleep(core.SleepTime * time.Millisecond)
 		}
 	case 8:
 		if core.Opcode == "CMP" {
@@ -63,7 +60,6 @@ func (core *Config) twoRegister(count int) int {
 
 			core.genRegHandler(int(reg1), "opentop")
 			core.genRegHandler(int(reg2), "openbot")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			var flags uint16 = 0
 
@@ -98,23 +94,20 @@ func (core *Config) twoRegister(count int) int {
 		}
 	case 10:
 		core.accHandler("close")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[DABA] = core.RegValues[ACC]
 		core.RegValues[DABB] = core.RegValues[ACC]
 
 		core.busHandler(int(DABA))
 		core.busHandler(int(DABB))
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.genRegHandler(int(reg1), "closein")
 		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 11:
 		core.accHandler("open")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.genRegHandler(int(reg1), "openin")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[reg1] = core.RegValues[ACC]
 		core.genRegHandler(int(reg1), "show")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 		core.OperationClass = "fetch"
 		core.clockTick(count)

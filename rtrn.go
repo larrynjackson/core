@@ -17,29 +17,26 @@ func (core *Config) rtrn(count int) int {
 		core.genRegHandler(int(SR), "show")
 
 		core.genRegHandler(int(SR), "closebot")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[B2] = core.RegValues[SR]
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.busHandler(int(B2))
+		time.Sleep(core.SleepTime * time.Millisecond)
 	case 8:
 
 		core.busGateHandler(int(B2DAB), "close")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[DABA] = core.RegValues[B2]
 		core.RegValues[DABB] = core.RegValues[B2]
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.busHandler(int(DABA))
 		core.busHandler(int(DABB))
-		time.Sleep(core.SleepTime * time.Millisecond)
 
 		core.cntlRegHandler(int(DA), "closein")
 		core.RegValues[DA] = core.RegValues[B2]
 		core.cntlRegHandler(int(DA), "show")
+		time.Sleep(core.SleepTime * time.Millisecond)
 	case 9:
 		core.busGateHandler(int(B2DAB), "open")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.cntlRegHandler(int(DA), "openin")
 		core.genRegHandler(int(SR), "openbot")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 10:
 
@@ -50,11 +47,13 @@ func (core *Config) rtrn(count int) int {
 
 		core.memHandler(int(DA))
 		core.memHandler(int(DR))
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 11:
 		core.cntlRegHandler(int(DA), "openout")
 		core.cntlRegHandler(int(DR), "openout")
 		core.cntlRegHandler(int(DR), "show")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 12:
 
@@ -62,22 +61,21 @@ func (core *Config) rtrn(count int) int {
 		core.cntlRegHandler(int(DR), "indirection")
 		core.RegValues[DABA] = core.RegValues[DR]
 		core.RegValues[DABB] = core.RegValues[DR]
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.busHandler(int(DABA))
 		core.busHandler(int(DABB))
-		time.Sleep(core.SleepTime * time.Millisecond)
 
 		core.cntlRegHandler(int(IA), "closein")
 		core.cntlRegHandler(int(IA), "outdirection")
 		core.RegValues[IA] = core.RegValues[DABB]
 		core.CoreMemPoint = int16(core.RegValues[IA])
 		core.cntlRegHandler(int(IA), "show")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 13:
 
 		core.cntlRegHandler(int(IA), "openin")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.cntlRegHandler(int(DR), "openin")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 		core.OperationClass = "fetch"
 		core.clockTick(count)

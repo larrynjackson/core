@@ -20,7 +20,6 @@ func (core *Config) loadSR(count int) int {
 	case 7:
 
 		core.genRegHandler(int(reg1), "closetop")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[B1] = core.RegValues[reg1]
 
 		core.busHandler(int(B1))
@@ -30,13 +29,12 @@ func (core *Config) loadSR(count int) int {
 
 		core.RegValues[ALUL] = core.RegValues[B1]
 		core.RegValues[ALUR] = 0
-		time.Sleep(core.SleepTime * time.Millisecond)
 
 		core.aluHandler("left")
 		core.aluHandler("right")
 		core.aluHandler("code")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.genRegHandler(int(reg1), "opentop")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 9:
 
@@ -47,7 +45,6 @@ func (core *Config) loadSR(count int) int {
 		time.Sleep(core.SleepTime * time.Millisecond)
 	case 10:
 		core.accHandler("close")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[DABA] = core.RegValues[ACC]
 		core.RegValues[DABB] = core.RegValues[ACC]
 

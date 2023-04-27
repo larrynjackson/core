@@ -34,6 +34,8 @@ type Config struct {
 	SleepTime         time.Duration
 	OutRow            int
 	OutCol            int
+	IOmem             map[int]string
+	IOrwCol           int
 }
 
 type Regval int
@@ -67,12 +69,24 @@ const (
 	B2DAB // no storage, just used as a key
 )
 
+const ioMemTopRow int = 26
+const ioTypingLine int = 41
+const ioMemCol int = 124
+const ioTypingCol int = 122
+
 func main() {
 
 	var core Config
 
 	core.OperationClass = "fetch"
 	core.CoreMemPoint = 0
+	core.IOrwCol = ioMemCol
+
+	core.IOmem = make(map[int]string)
+
+	for idx := 0; idx < 16; idx++ {
+		core.IOmem[idx] = ""
+	}
 
 	core.CreateCoreComponents()
 

@@ -2,50 +2,933 @@
 
 
 
-               ZERO                        DBYTE   0  
+               CHARL                       DBYTE   76  
+               OPERATOR:HI                 DBYTE   64  
+               CHARI                       DBYTE   73  
+               CHARV                       DBYTE   86  
+               CHARZ                       DBYTE   90  
+               NUM9                        DBYTE   57  
+               THREE                       DBYTE   3  
+               NUM7                        DBYTE   55  
+               CHARP                       DBYTE   80  
+               CHART                       DBYTE   84  
+               CHARY                       DBYTE   89  
+               OPDLVALUE:LO                DBYTE   253  
+               BUFFER:LO                   DBYTE   255  
+               CHARE                       DBYTE   69  
+               CHARK                       DBYTE   75  
+               CHAR*                       DBYTE   42  
+               OPDRSTK:HI                  DBYTE   65  
+               FIVE                        DBYTE   5  
+               CHARX                       DBYTE   88  
+               NUM4                        DBYTE   52  
+               NUM5                        DBYTE   53  
+               OPDRVALUE:HI                DBYTE   65  
+               OPDRSTK:LO                  DBYTE   255  
+               CHARF                       DBYTE   70  
+               CHARS                       DBYTE   83  
+               OPDLTOP:LO                  DBYTE   254  
+               OPDLSTK:HI                  DBYTE   64  
                ONE                         DBYTE   1  
+               CHARSP                      DBYTE   32  
+               CHARA                       DBYTE   65  
+               NUM1                        DBYTE   49  
+               OPDLSTK:LO                  DBYTE   255  
+               OPDRTOP:LO                  DBYTE   254  
+               BUFFER:HI                   DBYTE   66  
+               CHARJ                       DBYTE   74  
+               CHARQ                       DBYTE   81  
+               CHARR                       DBYTE   82  
+               NUM0                        DBYTE   48  
+               CHAR-                       DBYTE   45  
+               CHARB                       DBYTE   66  
+               CHARC                       DBYTE   67  
+               CHARW                       DBYTE   87  
+               CHAR+                       DBYTE   43  
+               CHARU                       DBYTE   85  
+               NUM8                        DBYTE   56  
+               CHARD                       DBYTE   68  
+               CHARH                       DBYTE   72  
+               CHARN                       DBYTE   78  
+               CHARO                       DBYTE   79  
+               OPDRVALUE:LO                DBYTE   253  
+               FOUR                        DBYTE   4  
+               CHARG                       DBYTE   71  
+               CHAR/                       DBYTE   47  
+               OPERATOR:LO                 DBYTE   250  
+               ZERO                        DBYTE   0  
+               CHARM                       DBYTE   77  
+               CHAR=                       DBYTE   61  
+               NUM2                        DBYTE   50  
+               NUM6                        DBYTE   54  
+               BUFFERNEXT:LO               DBYTE   254  
+               TWO                         DBYTE   2  
+               NUM3                        DBYTE   51  
+               OPDLVALUE:HI                DBYTE   64  
 
 
-               MULLOOP:HI                  DBYTE   0  
-               MULLOOP:LO                  DBYTE   24  
-               SETSTACK:HI                 DBYTE   0  
-               SETSTACK:LO                 DBYTE   15  
-               MULTIPLY:HI                 DBYTE   0  
-               MULTIPLY:LO                 DBYTE   19  
+               CALLPUSHR6OPDRIGHT:LO       DBYTE   152  
+               DOMUL:HI                    DBYTE   0  
+               RETURNISDIGITTRUE:LO        DBYTE   180  
+               CALLPUSHR6OPDLEFT:LO        DBYTE   108  
+               DONE1KWRITE:LO              DBYTE   71  
+               DONE100WRITE:HI             DBYTE   1  
+               TESTINPUTOK:LO              DBYTE   107  
+               INITBUFFER:HI               DBYTE   2  
+               CONVERTCOMPLETE:HI          DBYTE   1  
+               CONVERTOPDRSTK:LO           DBYTE   26  
+               GETR6BUFFERNEXT:LO          DBYTE   78  
+               WRITE10K:LO                 DBYTE   109  
+               CONVERTOPDLSTK:HI           DBYTE   1  
+               INITBUFFER:LO               DBYTE   186  
+               READINPUT:HI                DBYTE   0  
+               DONE1KWRITE:HI              DBYTE   1  
+               POPR6OPDRIGHT:LO            DBYTE   146  
+               CALLINPUTERROR:HI           DBYTE   0  
+               CONVERTRLOOP:HI             DBYTE   2  
+               IFISNOTSUBNEGATIVE:LO       DBYTE   246  
+               CONVERTOPDRSTK:HI           DBYTE   2  
+               DOSUB:LO                    DBYTE   240  
+               DODIV:LO                    DBYTE   7  
+               GETR6BUFFERNEXT:HI          DBYTE   2  
+               DIVIDE:HI                   DBYTE   2  
+               READINPUT:LO                DBYTE   3  
+               EVALUATE:LO                 DBYTE   185  
+               CONVANS2STR:HI              DBYTE   1  
+               RETURNZERO:HI               DBYTE   2  
+               DIVLOOP:HI                  DBYTE   2  
+               ENDPROGRAM:HI               DBYTE   0  
+               DOADD:LO                    DBYTE   218  
+               CONVERTLLOOP:HI             DBYTE   1  
+               MULTIPLY:LO                 DBYTE   196  
+               DONE10KWRITE:HI             DBYTE   1  
+               PUTR6BUFFERNEXT:LO          DBYTE   90  
+               START:LO                    DBYTE   0  
+               DOSUB:HI                    DBYTE   0  
+               ISR6DIGIT:LO                DBYTE   182  
+               CONVERTLLOOP:LO             DBYTE   226  
+               EMPTYSTACK:LO               DBYTE   115  
+               TESTINPUT:LO                DBYTE   70  
+               POPR6OPDLEFT:HI             DBYTE   2  
+               POPR6OPDLEFT:LO             DBYTE   117  
+               MULLOOP:HI                  DBYTE   2  
+               MULLOOP:LO                  DBYTE   207  
+               DIVIDE:LO                   DBYTE   217  
+               CALLINPUTERROR:LO           DBYTE   62  
+               PUSHR6OPDLEFT:HI            DBYTE   2  
+               POPR6OPDRIGHT:HI            DBYTE   2  
+               DONE100WRITE:LO             DBYTE   85  
+               CONVERTCOMPLETE:LO          DBYTE   223  
+               WRITE1K:HI                  DBYTE   1  
+               CALLPUSHR6OPDLEFT:HI        DBYTE   0  
+               CALLPUTR6OPERATOR:LO        DBYTE   147  
+               PUTR6BUFFERNEXT:HI          DBYTE   2  
+               PUSHR6OPDRIGHT:LO           DBYTE   134  
+               TESTINPUT:HI                DBYTE   0  
+               EVALUATE:HI                 DBYTE   0  
+               CALLPUTR6OPERATOR:HI        DBYTE   0  
+               DONE10WRITE:LO              DBYTE   100  
+               WRITE100:LO                 DBYTE   127  
+               ENDPROGRAM:LO               DBYTE   61  
+               PUSHR6OPDLEFT:LO            DBYTE   103  
+               READOPDL:LO                 DBYTE   112  
+               DOADD:HI                    DBYTE   0  
+               WRITE10:HI                  DBYTE   1  
+               RETURNISDIGITTRUE:HI        DBYTE   1  
+               START:HI                    DBYTE   0  
+               CONVERTOPDLSTK:LO           DBYTE   224  
+               PUTR6OPERATOR:HI            DBYTE   2  
+               PUTR6OPERATOR:LO            DBYTE   163  
+               CALLEVALERROR:HI            DBYTE   0  
+               CONVANS2STR:LO              DBYTE   39  
+               IFISNOTSUBNEGATIVE:HI       DBYTE   0  
+               PUSHR6OPDRIGHT:HI           DBYTE   2  
+               CALLLMULTIPLY:LO            DBYTE   207  
+               EMPTYSTACK:HI               DBYTE   2  
+               RETURNZERO:LO               DBYTE   192  
+               CALLEVALERROR:LO            DBYTE   180  
+               WRITE10:LO                  DBYTE   136  
+               WRITE1K:LO                  DBYTE   118  
+               CALLLMULTIPLY:HI            DBYTE   1  
+               CALLRMULTIPLY:LO            DBYTE   10  
+               SEER6BUFFERNEXT:HI          DBYTE   2  
+               DIVLOOP:LO                  DBYTE   228  
+               DODIV:HI                    DBYTE   1  
+               DONE10KWRITE:LO             DBYTE   55  
+               CALLRMULTIPLY:HI            DBYTE   2  
+               IFISSUBNEGATIVE:LO          DBYTE   224  
+               DOMUL:LO                    DBYTE   251  
+               WRITE10K:HI                 DBYTE   1  
+               INITOPCLRSTK:HI             DBYTE   2  
+               CONVERTRLOOP:LO             DBYTE   28  
+               WRITE100:HI                 DBYTE   1  
+               ISR6DIGIT:HI                DBYTE   1  
+               SEER6BUFFERNEXT:LO          DBYTE   68  
+               GETR6OPERATOR:LO            DBYTE   169  
+               IFISSUBNEGATIVE:HI          DBYTE   0  
+               READOPDL:HI                 DBYTE   0  
+               CALLPUSHR6OPDRIGHT:HI       DBYTE   0  
+               TESTINPUTOK:HI              DBYTE   0  
+               MULTIPLY:HI                 DBYTE   2  
+               ERROR:LO                    DBYTE   145  
+               READOPDR:LO                 DBYTE   156  
+               DONE10WRITE:HI              DBYTE   1  
+               READOPDR:HI                 DBYTE   0  
+               INITOPCLRSTK:LO             DBYTE   175  
+               ERROR:HI                    DBYTE   1  
+               GETR6OPERATOR:HI            DBYTE   2  
 
 
-00000  0x9700                    LDI       R7 SETSTACK:HI 
-00001  0x47F0                    SHL       R7 R7 8 
-00002  0x6F0F                    ADDI      R7 SETSTACK:LO 
-00003  0xDF00                    CALL      R7 
-00004  0x9437                    LDI       R4 55 
-00005  0x9507                    LDI       R5 7 
-00006  0xAC00                    PUSH      R4 
-00007  0xAD00                    PUSH      R5 
-00008  0x9700                    LDI       R7 MULTIPLY:HI 
-00009  0x47F0                    SHL       R7 R7 8 
-00010  0x6F13                    ADDI      R7 MULTIPLY:LO 
-00011  0xD000                    NOOP      
-00012  0xDF00                    CALL      R7 
-00013  0xB000                    POP       R0 
-00014  0x0000                    HALT      
-00015  0x9000  SETSTACK:         LDI       R0 0 
-00016  0x5000                    NOT       R0 R0 
-00017  0xC800                    LDSR      R0 
-00018  0xE000                    RTRN      
-00019  0xB000  MULTIPLY:         POP       R0 
-00020  0xB500                    POP       R5 
-00021  0xB400                    POP       R4 
-00022  0xD000                    NOOP      
-00023  0x9600                    LDI       R6 0 
-00024  0x0ED0  MULLOOP:          ADD       R6 R6 R4 
-00025  0x7501                    SUBI      R5 1 
-00026  0xD000                    NOOP      
-00027  0x9D00                    CMPI      R5 0 
-00028  0x9700                    LDI       R7 MULLOOP:HI 
-00029  0x47F0                    SHL       R7 R7 8 
-00030  0x6F18                    ADDI      R7 MULLOOP:LO 
-00031  0x6720                    BFLAG     R7 NE 
-00032  0xAE00                    PUSH      R6 
-00033  0xA800                    PUSH      R0 
-00034  0xE000                    RTRN      
+00000  0x9000  START:            LDI       R0 ZERO 
+00001  0x5000                    NOT       R0 R0 
+00002  0xC800                    LDSR      R0 
+00003  0x9702  READINPUT:        LDI       R7 INITOPCLRSTK:HI 
+00004  0x47F0                    SHL       R7 R7 8 
+00005  0x6FAF                    ADDI      R7 INITOPCLRSTK:LO 
+00006  0xDF00                    CALL      R7 
+00007  0x9702                    LDI       R7 INITBUFFER:HI 
+00008  0x47F0                    SHL       R7 R7 8 
+00009  0x6FBA                    ADDI      R7 INITBUFFER:LO 
+00010  0xDF00                    CALL      R7 
+00011  0x9600                    LDI       R6 ZERO 
+00012  0x9702                    LDI       R7 PUTR6OPERATOR:HI 
+00013  0x47F0                    SHL       R7 R7 8 
+00014  0x6FA3                    ADDI      R7 PUTR6OPERATOR:LO 
+00015  0xDF00                    CALL      R7 
+00016  0x9042                    LDI       R0 BUFFER:HI 
+00017  0x4010                    SHL       R0 R0 8 
+00018  0x68FF                    ADDI      R0 BUFFER:LO 
+00019  0xC000                    IN        R0 
+00020  0x9702                    LDI       R7 SEER6BUFFERNEXT:HI 
+00021  0x47F0                    SHL       R7 R7 8 
+00022  0x6F44                    ADDI      R7 SEER6BUFFERNEXT:LO 
+00023  0xDF00                    CALL      R7 
+00024  0x9700                    LDI       R7 ENDPROGRAM:HI 
+00025  0x47F0                    SHL       R7 R7 8 
+00026  0x6F3D                    ADDI      R7 ENDPROGRAM:LO 
+00027  0x9E51                    CMPI      R6 CHARQ 
+00028  0x6710                    BFLAG     R7 EQ 
+00029  0x9700                    LDI       R7 READOPDL:HI 
+00030  0x47F0                    SHL       R7 R7 8 
+00031  0x6F70                    ADDI      R7 READOPDL:LO 
+00032  0xDF00                    CALL      R7 
+00033  0x9700                    LDI       R7 READOPDR:HI 
+00034  0x47F0                    SHL       R7 R7 8 
+00035  0x6F9C                    ADDI      R7 READOPDR:LO 
+00036  0xDF00                    CALL      R7 
+00037  0x9700                    LDI       R7 TESTINPUT:HI 
+00038  0x47F0                    SHL       R7 R7 8 
+00039  0x6F46                    ADDI      R7 TESTINPUT:LO 
+00040  0xDF00                    CALL      R7 
+00041  0x9701                    LDI       R7 CONVERTOPDLSTK:HI 
+00042  0x47F0                    SHL       R7 R7 8 
+00043  0x6FE0                    ADDI      R7 CONVERTOPDLSTK:LO 
+00044  0xDF00                    CALL      R7 
+00045  0x9702                    LDI       R7 CONVERTOPDRSTK:HI 
+00046  0x47F0                    SHL       R7 R7 8 
+00047  0x6F1A                    ADDI      R7 CONVERTOPDRSTK:LO 
+00048  0xDF00                    CALL      R7 
+00049  0x9700                    LDI       R7 EVALUATE:HI 
+00050  0x47F0                    SHL       R7 R7 8 
+00051  0x6FB9                    ADDI      R7 EVALUATE:LO 
+00052  0xDF00                    CALL      R7 
+00053  0x9742                    LDI       R7 BUFFER:HI 
+00054  0x47F0                    SHL       R7 R7 8 
+00055  0x6FFF                    ADDI      R7 BUFFER:LO 
+00056  0xBF00                    OUT       R7 
+00057  0x9700                    LDI       R7 READINPUT:HI 
+00058  0x47F0                    SHL       R7 R7 8 
+00059  0x6F03                    ADDI      R7 READINPUT:LO 
+00060  0xA700                    JUMP      R7 
+00061  0x0000  ENDPROGRAM:       HALT      
+00062  0x9701  CALLINPUTERROR:   LDI       R7 ERROR:HI 
+00063  0x47F0                    SHL       R7 R7 8 
+00064  0x6F91                    ADDI      R7 ERROR:LO 
+00065  0xDF00                    CALL      R7 
+00066  0x9700                    LDI       R7 READINPUT:HI 
+00067  0x47F0                    SHL       R7 R7 8 
+00068  0x6F03                    ADDI      R7 READINPUT:LO 
+00069  0xA700                    JUMP      R7 
+00070  0x9740  TESTINPUT:        LDI       R7 OPDLSTK:HI 
+00071  0x47F0                    SHL       R7 R7 8 
+00072  0x6FFE                    ADDI      R7 OPDLTOP:LO 
+00073  0x9000                    LDI       R0 ZERO 
+00074  0x31E0                    LDW       R1 R7 R0 
+00075  0x9901                    CMPI      R1 1 
+00076  0x9500                    LDI       R5 CALLINPUTERROR:HI 
+00077  0x45B0                    SHL       R5 R5 8 
+00078  0x6D3E                    ADDI      R5 CALLINPUTERROR:LO 
+00079  0x6510                    BFLAG     R5 EQ 
+00080  0x9741                    LDI       R7 OPDRSTK:HI 
+00081  0x47F0                    SHL       R7 R7 8 
+00082  0x6FFE                    ADDI      R7 OPDRTOP:LO 
+00083  0x9000                    LDI       R0 ZERO 
+00084  0x31E0                    LDW       R1 R7 R0 
+00085  0x9901                    CMPI      R1 1 
+00086  0x6510                    BFLAG     R5 EQ 
+00087  0x9600                    LDI       R6 TESTINPUTOK:HI 
+00088  0x46D0                    SHL       R6 R6 8 
+00089  0x6E6B                    ADDI      R6 TESTINPUTOK:LO 
+00090  0x9740                    LDI       R7 OPERATOR:HI 
+00091  0x47F0                    SHL       R7 R7 8 
+00092  0x6FFA                    ADDI      R7 OPERATOR:LO 
+00093  0x9000                    LDI       R0 ZERO 
+00094  0x31E0                    LDW       R1 R7 R0 
+00095  0x992A                    CMPI      R1 CHAR* 
+00096  0x6610                    BFLAG     R6 EQ 
+00097  0x992B                    CMPI      R1 CHAR+ 
+00098  0x6610                    BFLAG     R6 EQ 
+00099  0x992D                    CMPI      R1 CHAR- 
+00100  0x6610                    BFLAG     R6 EQ 
+00101  0x992F                    CMPI      R1 CHAR/ 
+00102  0x6610                    BFLAG     R6 EQ 
+00103  0x9500                    LDI       R5 CALLINPUTERROR:HI 
+00104  0x45B0                    SHL       R5 R5 8 
+00105  0x6D3E                    ADDI      R5 CALLINPUTERROR:LO 
+00106  0xA500                    JUMP      R5 
+00107  0xE000  TESTINPUTOK:      RTRN      
+00108  0x9702  CALLPUSHR6OPDLEFT:LDI       R7 PUSHR6OPDLEFT:HI 
+00109  0x47F0                    SHL       R7 R7 8 
+00110  0x6F67                    ADDI      R7 PUSHR6OPDLEFT:LO 
+00111  0xDF00                    CALL      R7 
+00112  0x9702  READOPDL:         LDI       R7 GETR6BUFFERNEXT:HI 
+00113  0x47F0                    SHL       R7 R7 8 
+00114  0x6F4E                    ADDI      R7 GETR6BUFFERNEXT:LO 
+00115  0xDF00                    CALL      R7 
+00116  0x9E20                    CMPI      R6 CHARSP 
+00117  0x9700                    LDI       R7 READOPDL:HI 
+00118  0x47F0                    SHL       R7 R7 8 
+00119  0x6F70                    ADDI      R7 READOPDL:LO 
+00120  0x6710                    BFLAG     R7 EQ 
+00121  0x9701                    LDI       R7 ISR6DIGIT:HI 
+00122  0x47F0                    SHL       R7 R7 8 
+00123  0x6FB6                    ADDI      R7 ISR6DIGIT:LO 
+00124  0xDF00                    CALL      R7 
+00125  0x9700                    LDI       R7 CALLPUSHR6OPDLEFT:HI 
+00126  0x47F0                    SHL       R7 R7 8 
+00127  0x6F6C                    ADDI      R7 CALLPUSHR6OPDLEFT:LO 
+00128  0x9901                    CMPI      R1 ONE 
+00129  0x6710                    BFLAG     R7 EQ 
+00130  0x9E20                    CMPI      R6 CHARSP 
+00131  0x9700                    LDI       R7 READOPDL:HI 
+00132  0x47F0                    SHL       R7 R7 8 
+00133  0x6F70                    ADDI      R7 READOPDL:LO 
+00134  0x6710                    BFLAG     R7 EQ 
+00135  0x9700                    LDI       R7 CALLPUTR6OPERATOR:HI 
+00136  0x47F0                    SHL       R7 R7 8 
+00137  0x6F93                    ADDI      R7 CALLPUTR6OPERATOR:LO 
+00138  0x9E2B                    CMPI      R6 CHAR+ 
+00139  0x6710                    BFLAG     R7 EQ 
+00140  0x9E2D                    CMPI      R6 CHAR- 
+00141  0x6710                    BFLAG     R7 EQ 
+00142  0x9E2A                    CMPI      R6 CHAR* 
+00143  0x6710                    BFLAG     R7 EQ 
+00144  0x9E2F                    CMPI      R6 CHAR/ 
+00145  0x6710                    BFLAG     R7 EQ 
+00146  0xE000                    RTRN      
+00147  0x9702  CALLPUTR6OPERATOR:LDI       R7 PUTR6OPERATOR:HI 
+00148  0x47F0                    SHL       R7 R7 8 
+00149  0x6FA3                    ADDI      R7 PUTR6OPERATOR:LO 
+00150  0xDF00                    CALL      R7 
+00151  0xE000                    RTRN      
+00152  0x9702  CALLPUSHR6OPDRIGHT:LDI       R7 PUSHR6OPDRIGHT:HI 
+00153  0x47F0                    SHL       R7 R7 8 
+00154  0x6F86                    ADDI      R7 PUSHR6OPDRIGHT:LO 
+00155  0xDF00                    CALL      R7 
+00156  0x9702  READOPDR:         LDI       R7 GETR6BUFFERNEXT:HI 
+00157  0x47F0                    SHL       R7 R7 8 
+00158  0x6F4E                    ADDI      R7 GETR6BUFFERNEXT:LO 
+00159  0xDF00                    CALL      R7 
+00160  0x9E20                    CMPI      R6 CHARSP 
+00161  0x9700                    LDI       R7 READOPDR:HI 
+00162  0x47F0                    SHL       R7 R7 8 
+00163  0x6F9C                    ADDI      R7 READOPDR:LO 
+00164  0x6710                    BFLAG     R7 EQ 
+00165  0x9701                    LDI       R7 ISR6DIGIT:HI 
+00166  0x47F0                    SHL       R7 R7 8 
+00167  0x6FB6                    ADDI      R7 ISR6DIGIT:LO 
+00168  0xDF00                    CALL      R7 
+00169  0x9700                    LDI       R7 CALLPUSHR6OPDRIGHT:HI 
+00170  0x47F0                    SHL       R7 R7 8 
+00171  0x6F98                    ADDI      R7 CALLPUSHR6OPDRIGHT:LO 
+00172  0x9901                    CMPI      R1 ONE 
+00173  0x6710                    BFLAG     R7 EQ 
+00174  0x9E20                    CMPI      R6 CHARSP 
+00175  0x9700                    LDI       R7 READOPDR:HI 
+00176  0x47F0                    SHL       R7 R7 8 
+00177  0x6F9C                    ADDI      R7 READOPDR:LO 
+00178  0x6710                    BFLAG     R7 EQ 
+00179  0xE000                    RTRN      
+00180  0x9701  CALLEVALERROR:    LDI       R7 ERROR:HI 
+00181  0x47F0                    SHL       R7 R7 8 
+00182  0x6F91                    ADDI      R7 ERROR:LO 
+00183  0xDF00                    CALL      R7 
+00184  0x0000                    HALT      
+00185  0x9702  EVALUATE:         LDI       R7 INITBUFFER:HI 
+00186  0x47F0                    SHL       R7 R7 8 
+00187  0x6FBA                    ADDI      R7 INITBUFFER:LO 
+00188  0xDF00                    CALL      R7 
+00189  0x9740                    LDI       R7 OPERATOR:HI 
+00190  0x47F0                    SHL       R7 R7 8 
+00191  0x6FFA                    ADDI      R7 OPERATOR:LO 
+00192  0x9000                    LDI       R0 ZERO 
+00193  0x33E0                    LDW       R3 R7 R0 
+00194  0x9700                    LDI       R7 DOMUL:HI 
+00195  0x47F0                    SHL       R7 R7 8 
+00196  0x6FFB                    ADDI      R7 DOMUL:LO 
+00197  0x9B2A                    CMPI      R3 CHAR* 
+00198  0x6710                    BFLAG     R7 EQ 
+00199  0x9700                    LDI       R7 DOADD:HI 
+00200  0x47F0                    SHL       R7 R7 8 
+00201  0x6FDA                    ADDI      R7 DOADD:LO 
+00202  0x9B2B                    CMPI      R3 CHAR+ 
+00203  0x6710                    BFLAG     R7 EQ 
+00204  0x9700                    LDI       R7 DOSUB:HI 
+00205  0x47F0                    SHL       R7 R7 8 
+00206  0x6FF0                    ADDI      R7 DOSUB:LO 
+00207  0x9B2D                    CMPI      R3 CHAR- 
+00208  0x6710                    BFLAG     R7 EQ 
+00209  0x9701                    LDI       R7 DODIV:HI 
+00210  0x47F0                    SHL       R7 R7 8 
+00211  0x6F07                    ADDI      R7 DODIV:LO 
+00212  0x9B2F                    CMPI      R3 CHAR/ 
+00213  0x6710                    BFLAG     R7 EQ 
+00214  0x9500                    LDI       R5 CALLEVALERROR:HI 
+00215  0x45B0                    SHL       R5 R5 8 
+00216  0x6DB4                    ADDI      R5 CALLEVALERROR:LO 
+00217  0xDD00                    CALL      R5 
+00218  0x0950  DOADD:            ADD       R1 R2 R4 
+00219  0x9701                    LDI       R7 CONVANS2STR:HI 
+00220  0x47F0                    SHL       R7 R7 8 
+00221  0x6F27                    ADDI      R7 CONVANS2STR:LO 
+00222  0xDF00                    CALL      R7 
+00223  0xE000                    RTRN      
+00224  0x1188  IFISSUBNEGATIVE:  SUB       R1 R4 R2 
+00225  0x962D                    LDI       R6 CHAR- 
+00226  0x9702                    LDI       R7 PUTR6BUFFERNEXT:HI 
+00227  0x47F0                    SHL       R7 R7 8 
+00228  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00229  0xA900                    PUSH      R1 
+00230  0xAA00                    PUSH      R2 
+00231  0xAC00                    PUSH      R4 
+00232  0xDF00                    CALL      R7 
+00233  0xB400                    POP       R4 
+00234  0xB200                    POP       R2 
+00235  0xB100                    POP       R1 
+00236  0x9700                    LDI       R7 IFISNOTSUBNEGATIVE:HI 
+00237  0x47F0                    SHL       R7 R7 8 
+00238  0x6FF6                    ADDI      R7 IFISNOTSUBNEGATIVE:LO 
+00239  0xA700                    JUMP      R7 
+00240  0x9700  DOSUB:            LDI       R7 IFISSUBNEGATIVE:HI 
+00241  0x47F0                    SHL       R7 R7 8 
+00242  0x6FE0                    ADDI      R7 IFISSUBNEGATIVE:LO 
+00243  0x5A80                    CMP       R2 R4 
+00244  0x6740                    BFLAG     R7 LT 
+00245  0x1150                    SUB       R1 R2 R4 
+00246  0x9701  IFISNOTSUBNEGATIVE:LDI       R7 CONVANS2STR:HI 
+00247  0x47F0                    SHL       R7 R7 8 
+00248  0x6F27                    ADDI      R7 CONVANS2STR:LO 
+00249  0xDF00                    CALL      R7 
+00250  0xE000                    RTRN      
+00251  0xAA00  DOMUL:            PUSH      R2 
+00252  0xAC00                    PUSH      R4 
+00253  0x9702                    LDI       R7 MULTIPLY:HI 
+00254  0x47F0                    SHL       R7 R7 8 
+00255  0x6FC4                    ADDI      R7 MULTIPLY:LO 
+00256  0xDF00                    CALL      R7 
+00257  0xB100                    POP       R1 
+00258  0x9701                    LDI       R7 CONVANS2STR:HI 
+00259  0x47F0                    SHL       R7 R7 8 
+00260  0x6F27                    ADDI      R7 CONVANS2STR:LO 
+00261  0xDF00                    CALL      R7 
+00262  0xE000                    RTRN      
+00263  0xAA00  DODIV:            PUSH      R2 
+00264  0xAC00                    PUSH      R4 
+00265  0x9702                    LDI       R7 DIVIDE:HI 
+00266  0x47F0                    SHL       R7 R7 8 
+00267  0x6FD9                    ADDI      R7 DIVIDE:LO 
+00268  0xDF00                    CALL      R7 
+00269  0xB100                    POP       R1 
+00270  0x9701                    LDI       R7 CONVANS2STR:HI 
+00271  0x47F0                    SHL       R7 R7 8 
+00272  0x6F27                    ADDI      R7 CONVANS2STR:LO 
+00273  0xDF00                    CALL      R7 
+00274  0x9702                    LDI       R7 PUTR6BUFFERNEXT:HI 
+00275  0x47F0                    SHL       R7 R7 8 
+00276  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00277  0x9620                    LDI       R6 CHARSP 
+00278  0xAF00                    PUSH      R7 
+00279  0xDF00                    CALL      R7 
+00280  0xB700                    POP       R7 
+00281  0x9652                    LDI       R6 CHARR 
+00282  0xAF00                    PUSH      R7 
+00283  0xDF00                    CALL      R7 
+00284  0xB700                    POP       R7 
+00285  0x9620                    LDI       R6 CHARSP 
+00286  0xAF00                    PUSH      R7 
+00287  0xDF00                    CALL      R7 
+00288  0xB700                    POP       R7 
+00289  0xB100                    POP       R1 
+00290  0x9701                    LDI       R7 CONVANS2STR:HI 
+00291  0x47F0                    SHL       R7 R7 8 
+00292  0x6F27                    ADDI      R7 CONVANS2STR:LO 
+00293  0xDF00                    CALL      R7 
+00294  0xE000                    RTRN      
+00295  0xA900  CONVANS2STR:      PUSH      R1 
+00296  0x9427                    LDI       R4 39 
+00297  0x4490                    SHL       R4 R4 8 
+00298  0x6C10                    ADDI      R4 16 
+00299  0xAC00                    PUSH      R4 
+00300  0x9702                    LDI       R7 DIVIDE:HI 
+00301  0x47F0                    SHL       R7 R7 8 
+00302  0x6FD9                    ADDI      R7 DIVIDE:LO 
+00303  0xDF00                    CALL      R7 
+00304  0xB600                    POP       R6 
+00305  0xB200                    POP       R2 
+00306  0x9701                    LDI       R7 WRITE10K:HI 
+00307  0x47F0                    SHL       R7 R7 8 
+00308  0x6F6D                    ADDI      R7 WRITE10K:LO 
+00309  0x9E00                    CMPI      R6 ZERO 
+00310  0x6780                    BFLAG     R7 GT 
+00311  0xAA00  DONE10KWRITE:     PUSH      R2 
+00312  0x9403                    LDI       R4 3 
+00313  0x4490                    SHL       R4 R4 8 
+00314  0x6CE8                    ADDI      R4 232 
+00315  0xAC00                    PUSH      R4 
+00316  0x9702                    LDI       R7 DIVIDE:HI 
+00317  0x47F0                    SHL       R7 R7 8 
+00318  0x6FD9                    ADDI      R7 DIVIDE:LO 
+00319  0xDF00                    CALL      R7 
+00320  0xB600                    POP       R6 
+00321  0xB200                    POP       R2 
+00322  0x9701                    LDI       R7 WRITE1K:HI 
+00323  0x47F0                    SHL       R7 R7 8 
+00324  0x6F76                    ADDI      R7 WRITE1K:LO 
+00325  0x9E00                    CMPI      R6 ZERO 
+00326  0x6780                    BFLAG     R7 GT 
+00327  0xAA00  DONE1KWRITE:      PUSH      R2 
+00328  0x9464                    LDI       R4 100 
+00329  0xAC00                    PUSH      R4 
+00330  0x9702                    LDI       R7 DIVIDE:HI 
+00331  0x47F0                    SHL       R7 R7 8 
+00332  0x6FD9                    ADDI      R7 DIVIDE:LO 
+00333  0xDF00                    CALL      R7 
+00334  0xB600                    POP       R6 
+00335  0xB200                    POP       R2 
+00336  0x9701                    LDI       R7 WRITE100:HI 
+00337  0x47F0                    SHL       R7 R7 8 
+00338  0x6F7F                    ADDI      R7 WRITE100:LO 
+00339  0x9E00                    CMPI      R6 ZERO 
+00340  0x6780                    BFLAG     R7 GT 
+00341  0xAA00  DONE100WRITE:     PUSH      R2 
+00342  0x940A                    LDI       R4 10 
+00343  0xAC00                    PUSH      R4 
+00344  0x9702                    LDI       R7 DIVIDE:HI 
+00345  0x47F0                    SHL       R7 R7 8 
+00346  0x6FD9                    ADDI      R7 DIVIDE:LO 
+00347  0xDF00                    CALL      R7 
+00348  0xD000                    NOOP      
+00349  0xB600                    POP       R6 
+00350  0xB200                    POP       R2 
+00351  0x9701                    LDI       R7 WRITE10:HI 
+00352  0x47F0                    SHL       R7 R7 8 
+00353  0x6F88                    ADDI      R7 WRITE10:LO 
+00354  0x9E00                    CMPI      R6 ZERO 
+00355  0x6780                    BFLAG     R7 GT 
+00356  0xAA00  DONE10WRITE:      PUSH      R2 
+00357  0xB600                    POP       R6 
+00358  0xD000                    NOOP      
+00359  0x9702                    LDI       R7 PUTR6BUFFERNEXT:HI 
+00360  0x47F0                    SHL       R7 R7 8 
+00361  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00362  0x6E30                    ADDI      R6 NUM0 
+00363  0xDF00                    CALL      R7 
+00364  0xE000                    RTRN      
+00365  0x9702  WRITE10K:         LDI       R7 PUTR6BUFFERNEXT:HI 
+00366  0x47F0                    SHL       R7 R7 8 
+00367  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00368  0x6E30                    ADDI      R6 NUM0 
+00369  0xDF00                    CALL      R7 
+00370  0x9701                    LDI       R7 DONE10KWRITE:HI 
+00371  0x47F0                    SHL       R7 R7 8 
+00372  0x6F37                    ADDI      R7 DONE10KWRITE:LO 
+00373  0xA700                    JUMP      R7 
+00374  0x9702  WRITE1K:          LDI       R7 PUTR6BUFFERNEXT:HI 
+00375  0x47F0                    SHL       R7 R7 8 
+00376  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00377  0x6E30                    ADDI      R6 NUM0 
+00378  0xDF00                    CALL      R7 
+00379  0x9701                    LDI       R7 DONE1KWRITE:HI 
+00380  0x47F0                    SHL       R7 R7 8 
+00381  0x6F47                    ADDI      R7 DONE1KWRITE:LO 
+00382  0xA700                    JUMP      R7 
+00383  0x9702  WRITE100:         LDI       R7 PUTR6BUFFERNEXT:HI 
+00384  0x47F0                    SHL       R7 R7 8 
+00385  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00386  0x6E30                    ADDI      R6 NUM0 
+00387  0xDF00                    CALL      R7 
+00388  0x9701                    LDI       R7 DONE100WRITE:HI 
+00389  0x47F0                    SHL       R7 R7 8 
+00390  0x6F55                    ADDI      R7 DONE100WRITE:LO 
+00391  0xA700                    JUMP      R7 
+00392  0x9702  WRITE10:          LDI       R7 PUTR6BUFFERNEXT:HI 
+00393  0x47F0                    SHL       R7 R7 8 
+00394  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00395  0x6E30                    ADDI      R6 NUM0 
+00396  0xDF00                    CALL      R7 
+00397  0x9701                    LDI       R7 DONE10WRITE:HI 
+00398  0x47F0                    SHL       R7 R7 8 
+00399  0x6F64                    ADDI      R7 DONE10WRITE:LO 
+00400  0xA700                    JUMP      R7 
+00401  0x9702  ERROR:            LDI       R7 INITBUFFER:HI 
+00402  0x47F0                    SHL       R7 R7 8 
+00403  0x6FBA                    ADDI      R7 INITBUFFER:LO 
+00404  0xDF00                    CALL      R7 
+00405  0x9702                    LDI       R7 PUTR6BUFFERNEXT:HI 
+00406  0x47F0                    SHL       R7 R7 8 
+00407  0x6F5A                    ADDI      R7 PUTR6BUFFERNEXT:LO 
+00408  0x9645                    LDI       R6 CHARE 
+00409  0xAF00                    PUSH      R7 
+00410  0xDF00                    CALL      R7 
+00411  0xB700                    POP       R7 
+00412  0x9652                    LDI       R6 CHARR 
+00413  0xAF00                    PUSH      R7 
+00414  0xDF00                    CALL      R7 
+00415  0xB700                    POP       R7 
+00416  0xAF00                    PUSH      R7 
+00417  0xDF00                    CALL      R7 
+00418  0xB700                    POP       R7 
+00419  0x964F                    LDI       R6 CHARO 
+00420  0xAF00                    PUSH      R7 
+00421  0xDF00                    CALL      R7 
+00422  0xB700                    POP       R7 
+00423  0x9652                    LDI       R6 CHARR 
+00424  0xAF00                    PUSH      R7 
+00425  0xDF00                    CALL      R7 
+00426  0xB700                    POP       R7 
+00427  0x9600                    LDI       R6 ZERO 
+00428  0xAF00                    PUSH      R7 
+00429  0xDF00                    CALL      R7 
+00430  0xB700                    POP       R7 
+00431  0x9742                    LDI       R7 BUFFER:HI 
+00432  0x47F0                    SHL       R7 R7 8 
+00433  0x6FFF                    ADDI      R7 BUFFER:LO 
+00434  0xBF00                    OUT       R7 
+00435  0xE000                    RTRN      
+00436  0x9101  RETURNISDIGITTRUE:LDI       R1 ONE 
+00437  0xE000                    RTRN      
+00438  0x9701  ISR6DIGIT:        LDI       R7 RETURNISDIGITTRUE:HI 
+00439  0x47F0                    SHL       R7 R7 8 
+00440  0x6FB4                    ADDI      R7 RETURNISDIGITTRUE:LO 
+00441  0x9E30                    CMPI      R6 NUM0 
+00442  0x6710                    BFLAG     R7 EQ 
+00443  0x9E31                    CMPI      R6 NUM1 
+00444  0x6710                    BFLAG     R7 EQ 
+00445  0x9E32                    CMPI      R6 NUM2 
+00446  0x6710                    BFLAG     R7 EQ 
+00447  0x9E33                    CMPI      R6 NUM3 
+00448  0x6710                    BFLAG     R7 EQ 
+00449  0x9E34                    CMPI      R6 NUM4 
+00450  0x6710                    BFLAG     R7 EQ 
+00451  0x9E35                    CMPI      R6 NUM5 
+00452  0x6710                    BFLAG     R7 EQ 
+00453  0x9E36                    CMPI      R6 NUM6 
+00454  0x6710                    BFLAG     R7 EQ 
+00455  0x9E37                    CMPI      R6 NUM7 
+00456  0x6710                    BFLAG     R7 EQ 
+00457  0x9E38                    CMPI      R6 NUM8 
+00458  0x6710                    BFLAG     R7 EQ 
+00459  0x9E39                    CMPI      R6 NUM9 
+00460  0x6710                    BFLAG     R7 EQ 
+00461  0x9100                    LDI       R1 ZERO 
+00462  0xE000                    RTRN      
+00463  0x9702  CALLLMULTIPLY:    LDI       R7 MULTIPLY:HI 
+00464  0x47F0                    SHL       R7 R7 8 
+00465  0x6FC4                    ADDI      R7 MULTIPLY:LO 
+00466  0xAA00                    PUSH      R2 
+00467  0xAD00                    PUSH      R5 
+00468  0xAB00                    PUSH      R3 
+00469  0xAE00                    PUSH      R6 
+00470  0xDF00                    CALL      R7 
+00471  0xB100                    POP       R1 
+00472  0xB500                    POP       R5 
+00473  0xB200                    POP       R2 
+00474  0x0A28                    ADD       R2 R1 R2 
+00475  0x9701                    LDI       R7 CONVERTLLOOP:HI 
+00476  0x47F0                    SHL       R7 R7 8 
+00477  0x6FE2                    ADDI      R7 CONVERTLLOOP:LO 
+00478  0xA700                    JUMP      R7 
+00479  0xE000  CONVERTCOMPLETE:  RTRN      
+00480  0x9500  CONVERTOPDLSTK:   LDI       R5 ZERO 
+00481  0x9200                    LDI       R2 ZERO 
+00482  0x9702  CONVERTLLOOP:     LDI       R7 POPR6OPDLEFT:HI 
+00483  0x47F0                    SHL       R7 R7 8 
+00484  0x6F75                    ADDI      R7 POPR6OPDLEFT:LO 
+00485  0xAD00                    PUSH      R5 
+00486  0xDF00                    CALL      R7 
+00487  0xB500                    POP       R5 
+00488  0x9701                    LDI       R7 CONVERTCOMPLETE:HI 
+00489  0x47F0                    SHL       R7 R7 8 
+00490  0x6FDF                    ADDI      R7 CONVERTCOMPLETE:LO 
+00491  0x9E00                    CMPI      R6 ZERO 
+00492  0x6710                    BFLAG     R7 EQ 
+00493  0x6D01                    ADDI      R5 ONE 
+00494  0x7630                    SUBI      R6 NUM0 
+00495  0x9701                    LDI       R7 CALLLMULTIPLY:HI 
+00496  0x47F0                    SHL       R7 R7 8 
+00497  0x6FCF                    ADDI      R7 CALLLMULTIPLY:LO 
+00498  0x9301                    LDI       R3 ONE 
+00499  0x9D01                    CMPI      R5 ONE 
+00500  0x6710                    BFLAG     R7 EQ 
+00501  0x930A                    LDI       R3 10 
+00502  0x9D02                    CMPI      R5 TWO 
+00503  0x6710                    BFLAG     R7 EQ 
+00504  0x9364                    LDI       R3 100 
+00505  0x9D03                    CMPI      R5 THREE 
+00506  0x6710                    BFLAG     R7 EQ 
+00507  0x9303                    LDI       R3 3 
+00508  0x4370                    SHL       R3 R3 8 
+00509  0x6BE8                    ADDI      R3 232 
+00510  0x9D04                    CMPI      R5 FOUR 
+00511  0x6710                    BFLAG     R7 EQ 
+00512  0x9327                    LDI       R3 39 
+00513  0x4370                    SHL       R3 R3 8 
+00514  0x6B10                    ADDI      R3 16 
+00515  0x9D05                    CMPI      R5 FIVE 
+00516  0x6710                    BFLAG     R7 EQ 
+00517  0x9701                    LDI       R7 ERROR:HI 
+00518  0x47F0                    SHL       R7 R7 8 
+00519  0x6F91                    ADDI      R7 ERROR:LO 
+00520  0xDF00                    CALL      R7 
+00521  0xE000                    RTRN      
+00522  0x9702  CALLRMULTIPLY:    LDI       R7 MULTIPLY:HI 
+00523  0x47F0                    SHL       R7 R7 8 
+00524  0x6FC4                    ADDI      R7 MULTIPLY:LO 
+00525  0xAC00                    PUSH      R4 
+00526  0xAD00                    PUSH      R5 
+00527  0xAB00                    PUSH      R3 
+00528  0xAE00                    PUSH      R6 
+00529  0xDF00                    CALL      R7 
+00530  0xB100                    POP       R1 
+00531  0xB500                    POP       R5 
+00532  0xB400                    POP       R4 
+00533  0x0C30                    ADD       R4 R1 R4 
+00534  0x9702                    LDI       R7 CONVERTRLOOP:HI 
+00535  0x47F0                    SHL       R7 R7 8 
+00536  0x6F1C                    ADDI      R7 CONVERTRLOOP:LO 
+00537  0xA700                    JUMP      R7 
+00538  0x9500  CONVERTOPDRSTK:   LDI       R5 ZERO 
+00539  0x9400                    LDI       R4 ZERO 
+00540  0x9702  CONVERTRLOOP:     LDI       R7 POPR6OPDRIGHT:HI 
+00541  0x47F0                    SHL       R7 R7 8 
+00542  0x6F92                    ADDI      R7 POPR6OPDRIGHT:LO 
+00543  0xAD00                    PUSH      R5 
+00544  0xDF00                    CALL      R7 
+00545  0xB500                    POP       R5 
+00546  0x9701                    LDI       R7 CONVERTCOMPLETE:HI 
+00547  0x47F0                    SHL       R7 R7 8 
+00548  0x6FDF                    ADDI      R7 CONVERTCOMPLETE:LO 
+00549  0x9E00                    CMPI      R6 ZERO 
+00550  0x6710                    BFLAG     R7 EQ 
+00551  0x6D01                    ADDI      R5 ONE 
+00552  0x7630                    SUBI      R6 NUM0 
+00553  0x9702                    LDI       R7 CALLRMULTIPLY:HI 
+00554  0x47F0                    SHL       R7 R7 8 
+00555  0x6F0A                    ADDI      R7 CALLRMULTIPLY:LO 
+00556  0x9301                    LDI       R3 ONE 
+00557  0x9D01                    CMPI      R5 ONE 
+00558  0x6710                    BFLAG     R7 EQ 
+00559  0x930A                    LDI       R3 10 
+00560  0x9D02                    CMPI      R5 TWO 
+00561  0x6710                    BFLAG     R7 EQ 
+00562  0x9364                    LDI       R3 100 
+00563  0x9D03                    CMPI      R5 THREE 
+00564  0x6710                    BFLAG     R7 EQ 
+00565  0x9303                    LDI       R3 3 
+00566  0x4370                    SHL       R3 R3 8 
+00567  0x6BE8                    ADDI      R3 232 
+00568  0x9D04                    CMPI      R5 FOUR 
+00569  0x6710                    BFLAG     R7 EQ 
+00570  0x9327                    LDI       R3 39 
+00571  0x4370                    SHL       R3 R3 8 
+00572  0x6B10                    ADDI      R3 16 
+00573  0x9D05                    CMPI      R5 FIVE 
+00574  0x6710                    BFLAG     R7 EQ 
+00575  0x9701                    LDI       R7 ERROR:HI 
+00576  0x47F0                    SHL       R7 R7 8 
+00577  0x6F91                    ADDI      R7 ERROR:LO 
+00578  0xDF00                    CALL      R7 
+00579  0xE000                    RTRN      
+00580  0x9742  SEER6BUFFERNEXT:  LDI       R7 BUFFER:HI 
+00581  0x47F0                    SHL       R7 R7 8 
+00582  0x6FFE                    ADDI      R7 BUFFERNEXT:LO 
+00583  0x9100                    LDI       R1 ZERO 
+00584  0x30E4                    LDW       R0 R7 R1 
+00585  0x9542                    LDI       R5 BUFFER:HI 
+00586  0x45B0                    SHL       R5 R5 8 
+00587  0x6DFF                    ADDI      R5 BUFFER:LO 
+00588  0x36A0                    LDW       R6 R5 R0 
+00589  0xE000                    RTRN      
+00590  0x9742  GETR6BUFFERNEXT:  LDI       R7 BUFFER:HI 
+00591  0x47F0                    SHL       R7 R7 8 
+00592  0x6FFE                    ADDI      R7 BUFFERNEXT:LO 
+00593  0x9100                    LDI       R1 ZERO 
+00594  0x30E4                    LDW       R0 R7 R1 
+00595  0x9542                    LDI       R5 BUFFER:HI 
+00596  0x45B0                    SHL       R5 R5 8 
+00597  0x6DFF                    ADDI      R5 BUFFER:LO 
+00598  0x36A0                    LDW       R6 R5 R0 
+00599  0x6801                    ADDI      R0 ONE 
+00600  0x38E4                    STW       R0 R7 R1 
+00601  0xE000                    RTRN      
+00602  0x9742  PUTR6BUFFERNEXT:  LDI       R7 BUFFER:HI 
+00603  0x47F0                    SHL       R7 R7 8 
+00604  0x6FFE                    ADDI      R7 BUFFERNEXT:LO 
+00605  0x9100                    LDI       R1 ZERO 
+00606  0x30E4                    LDW       R0 R7 R1 
+00607  0x9542                    LDI       R5 BUFFER:HI 
+00608  0x45B0                    SHL       R5 R5 8 
+00609  0x6DFF                    ADDI      R5 BUFFER:LO 
+00610  0x3EA0                    STW       R6 R5 R0 
+00611  0x6801                    ADDI      R0 ONE 
+00612  0x39A0                    STW       R1 R5 R0 
+00613  0x38E4                    STW       R0 R7 R1 
+00614  0xE000                    RTRN      
+00615  0x9740  PUSHR6OPDLEFT:    LDI       R7 OPDLSTK:HI 
+00616  0x47F0                    SHL       R7 R7 8 
+00617  0x6FFE                    ADDI      R7 OPDLTOP:LO 
+00618  0x9100                    LDI       R1 ZERO 
+00619  0x30E4                    LDW       R0 R7 R1 
+00620  0x9540                    LDI       R5 OPDLSTK:HI 
+00621  0x45B0                    SHL       R5 R5 8 
+00622  0x6DFF                    ADDI      R5 OPDLSTK:LO 
+00623  0x3EA0                    STW       R6 R5 R0 
+00624  0x6801                    ADDI      R0 ONE 
+00625  0x38E4                    STW       R0 R7 R1 
+00626  0xE000                    RTRN      
+00627  0x9600  EMPTYSTACK:       LDI       R6 ZERO 
+00628  0xE000                    RTRN      
+00629  0x9740  POPR6OPDLEFT:     LDI       R7 OPDLSTK:HI 
+00630  0x47F0                    SHL       R7 R7 8 
+00631  0x6FFE                    ADDI      R7 OPDLTOP:LO 
+00632  0x9100                    LDI       R1 ZERO 
+00633  0x30E4                    LDW       R0 R7 R1 
+00634  0x7001                    SUBI      R0 ONE 
+00635  0x9302                    LDI       R3 EMPTYSTACK:HI 
+00636  0x4370                    SHL       R3 R3 8 
+00637  0x6B73                    ADDI      R3 EMPTYSTACK:LO 
+00638  0x9800                    CMPI      R0 ZERO 
+00639  0x6310                    BFLAG     R3 EQ 
+00640  0x9540                    LDI       R5 OPDLSTK:HI 
+00641  0x45B0                    SHL       R5 R5 8 
+00642  0x6DFF                    ADDI      R5 OPDLSTK:LO 
+00643  0x36A0                    LDW       R6 R5 R0 
+00644  0x38E4                    STW       R0 R7 R1 
+00645  0xE000                    RTRN      
+00646  0x9741  PUSHR6OPDRIGHT:   LDI       R7 OPDRSTK:HI 
+00647  0x47F0                    SHL       R7 R7 8 
+00648  0x6FFE                    ADDI      R7 OPDRTOP:LO 
+00649  0x9100                    LDI       R1 ZERO 
+00650  0x30E4                    LDW       R0 R7 R1 
+00651  0x9541                    LDI       R5 OPDRSTK:HI 
+00652  0x45B0                    SHL       R5 R5 8 
+00653  0x6DFF                    ADDI      R5 OPDRSTK:LO 
+00654  0x3EA0                    STW       R6 R5 R0 
+00655  0x6801                    ADDI      R0 ONE 
+00656  0x38E4                    STW       R0 R7 R1 
+00657  0xE000                    RTRN      
+00658  0x9741  POPR6OPDRIGHT:    LDI       R7 OPDRSTK:HI 
+00659  0x47F0                    SHL       R7 R7 8 
+00660  0x6FFE                    ADDI      R7 OPDRTOP:LO 
+00661  0x9100                    LDI       R1 ZERO 
+00662  0x30E4                    LDW       R0 R7 R1 
+00663  0x7001                    SUBI      R0 ONE 
+00664  0x9302                    LDI       R3 EMPTYSTACK:HI 
+00665  0x4370                    SHL       R3 R3 8 
+00666  0x6B73                    ADDI      R3 EMPTYSTACK:LO 
+00667  0x9800                    CMPI      R0 ZERO 
+00668  0x6310                    BFLAG     R3 EQ 
+00669  0x9541                    LDI       R5 OPDRSTK:HI 
+00670  0x45B0                    SHL       R5 R5 8 
+00671  0x6DFF                    ADDI      R5 OPDRSTK:LO 
+00672  0x36A0                    LDW       R6 R5 R0 
+00673  0x38E4                    STW       R0 R7 R1 
+00674  0xE000                    RTRN      
+00675  0x9740  PUTR6OPERATOR:    LDI       R7 OPERATOR:HI 
+00676  0x47F0                    SHL       R7 R7 8 
+00677  0x6FFA                    ADDI      R7 OPERATOR:LO 
+00678  0x9100                    LDI       R1 ZERO 
+00679  0x3EE4                    STW       R6 R7 R1 
+00680  0xE000                    RTRN      
+00681  0x9740  GETR6OPERATOR:    LDI       R7 OPERATOR:HI 
+00682  0x47F0                    SHL       R7 R7 8 
+00683  0x6FFA                    ADDI      R7 OPERATOR:LO 
+00684  0x9100                    LDI       R1 ZERO 
+00685  0x36E4                    LDW       R6 R7 R1 
+00686  0xE000                    RTRN      
+00687  0x9100  INITOPCLRSTK:     LDI       R1 ZERO 
+00688  0x9001                    LDI       R0 ONE 
+00689  0x9740                    LDI       R7 OPDLSTK:HI 
+00690  0x47F0                    SHL       R7 R7 8 
+00691  0x6FFE                    ADDI      R7 OPDLTOP:LO 
+00692  0x38E4                    STW       R0 R7 R1 
+00693  0x9741                    LDI       R7 OPDRSTK:HI 
+00694  0x47F0                    SHL       R7 R7 8 
+00695  0x6FFE                    ADDI      R7 OPDRTOP:LO 
+00696  0x38E4                    STW       R0 R7 R1 
+00697  0xE000                    RTRN      
+00698  0x9000  INITBUFFER:       LDI       R0 ZERO 
+00699  0x9742                    LDI       R7 BUFFER:HI 
+00700  0x47F0                    SHL       R7 R7 8 
+00701  0x6FFE                    ADDI      R7 BUFFERNEXT:LO 
+00702  0x38E0                    STW       R0 R7 R0 
+00703  0xE000                    RTRN      
+00704  0x9600  RETURNZERO:       LDI       R6 ZERO 
+00705  0xAE00                    PUSH      R6 
+00706  0xA800                    PUSH      R0 
+00707  0xE000                    RTRN      
+00708  0xB000  MULTIPLY:         POP       R0 
+00709  0xB500                    POP       R5 
+00710  0xB400                    POP       R4 
+00711  0x9702                    LDI       R7 RETURNZERO:HI 
+00712  0x47F0                    SHL       R7 R7 8 
+00713  0x6FC0                    ADDI      R7 RETURNZERO:LO 
+00714  0x9D00                    CMPI      R5 ZERO 
+00715  0x6710                    BFLAG     R7 EQ 
+00716  0x9C00                    CMPI      R4 ZERO 
+00717  0x6710                    BFLAG     R7 EQ 
+00718  0x9600                    LDI       R6 ZERO 
+00719  0x0ED0  MULLOOP:          ADD       R6 R6 R4 
+00720  0x7501                    SUBI      R5 ONE 
+00721  0x9D00                    CMPI      R5 ZERO 
+00722  0x9702                    LDI       R7 MULLOOP:HI 
+00723  0x47F0                    SHL       R7 R7 8 
+00724  0x6FCF                    ADDI      R7 MULLOOP:LO 
+00725  0x6720                    BFLAG     R7 NE 
+00726  0xAE00                    PUSH      R6 
+00727  0xA800                    PUSH      R0 
+00728  0xE000                    RTRN      
+00729  0xB000  DIVIDE:           POP       R0 
+00730  0xB500                    POP       R5 
+00731  0xB400                    POP       R4 
+00732  0x9701                    LDI       R7 ERROR:HI 
+00733  0x47F0                    SHL       R7 R7 8 
+00734  0x6F91                    ADDI      R7 ERROR:LO 
+00735  0x9D00                    CMPI      R5 ZERO 
+00736  0x6710                    BFLAG     R7 EQ 
+00737  0x9300                    LDI       R3 ZERO 
+00738  0x0B70                    ADD       R3 R3 R4 
+00739  0x9600                    LDI       R6 ZERO 
+00740  0x1494  DIVLOOP:          SUB       R4 R4 R5 
+00741  0x6E01                    ADDI      R6 ONE 
+00742  0x5B80                    CMP       R3 R4 
+00743  0x9702                    LDI       R7 DIVLOOP:HI 
+00744  0x47F0                    SHL       R7 R7 8 
+00745  0x6FE4                    ADDI      R7 DIVLOOP:LO 
+00746  0x6780                    BFLAG     R7 GT 
+00747  0x7601                    SUBI      R6 ONE 
+00748  0x0C94                    ADD       R4 R4 R5 
+00749  0xAC00                    PUSH      R4 
+00750  0xAE00                    PUSH      R6 
+00751  0xA800                    PUSH      R0 
+00752  0xE000                    RTRN      

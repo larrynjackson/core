@@ -91,10 +91,10 @@ func (core *Config) shell() {
 
 			if input == "H" {
 				break
-			} else if input == "U" && core.SleepTime < 100 {
-				core.SleepTime += 10
+			} else if input == "U" && core.SleepTime < 10 {
+				core.SleepTime += 1
 			} else if input == "D" && core.SleepTime > 0 {
-				core.SleepTime -= 10
+				core.SleepTime -= 1
 			} else if input == "S" {
 				switch core.OperationClass {
 				case "fetch":

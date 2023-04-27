@@ -28,11 +28,13 @@ func (core *Config) fetchInstruction(count int) int {
 	case 3:
 		core.cntlRegHandler(int(IR), "closein")
 		core.cntlRegHandler(int(IR), "show")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 4:
 
 		core.cntlRegHandler(int(IA), "openout")
 		core.cntlRegHandler(int(IR), "openin")
+		time.Sleep(core.SleepTime * time.Millisecond)
 
 	case 5:
 

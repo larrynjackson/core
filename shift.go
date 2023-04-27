@@ -22,10 +22,8 @@ func (core *Config) shift(count int) int {
 	switch count {
 	case 7:
 		core.genRegHandler(int(reg2), "closetop")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[B1] = core.RegValues[reg2]
 		core.busHandler(int(B1))
-		time.Sleep(core.SleepTime * time.Millisecond)
 
 		core.cntlRegHandler(int(IR), "closeout")
 		core.RegValues[B2] = value
@@ -33,7 +31,6 @@ func (core *Config) shift(count int) int {
 		time.Sleep(core.SleepTime * time.Millisecond)
 	case 8:
 		core.genRegHandler(int(reg2), "opentop")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.cntlRegHandler(int(IR), "openout")
 		time.Sleep(core.SleepTime * time.Millisecond)
 	case 9:
@@ -50,16 +47,13 @@ func (core *Config) shift(count int) int {
 		} else if core.Opcode == "SHR" {
 			core.RegValues[ACC] = core.RegValues[ALUL] >> core.RegValues[ALUR]
 		}
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.accHandler("show")
 		time.Sleep(core.SleepTime * time.Millisecond)
 	case 11:
 		core.accHandler("close")
 		core.genRegHandler(int(reg1), "closein")
 		core.RegValues[DABA] = core.RegValues[ACC]
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[DABB] = core.RegValues[ACC]
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[reg1] = core.RegValues[ACC]
 		core.busHandler(int(DABA))
 		core.busHandler(int(DABB))

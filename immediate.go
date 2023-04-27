@@ -22,7 +22,6 @@ func (core *Config) immediate(count int) int {
 
 		if core.Opcode != "LDI" {
 			core.genRegHandler(int(reg1), "closetop")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.RegValues[B1] = core.RegValues[reg1]
 
 			core.busHandler(int(B1))
@@ -38,16 +37,16 @@ func (core *Config) immediate(count int) int {
 		if core.Opcode == "LDI" {
 			core.RegValues[ALUL] = 0
 			core.RegValues[ALUR] = core.RegValues[B2]
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.cntlRegHandler(int(IR), "openout")
+			time.Sleep(core.SleepTime * time.Millisecond)
 
 		} else {
 			core.RegValues[ALUL] = core.RegValues[B1]
 			core.RegValues[ALUR] = core.RegValues[B2]
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.genRegHandler(int(reg1), "opentop")
 			core.cntlRegHandler(int(IR), "openout")
+			time.Sleep(core.SleepTime * time.Millisecond)
 		}
 
 		core.aluHandler("left")
@@ -95,7 +94,6 @@ func (core *Config) immediate(count int) int {
 		time.Sleep(core.SleepTime * time.Millisecond)
 	case 10:
 		core.accHandler("close")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[DABA] = core.RegValues[ACC]
 		core.RegValues[DABB] = core.RegValues[ACC]
 

@@ -25,14 +25,11 @@ func (core *Config) threeRegister(count int) int {
 	switch count {
 	case 7:
 		core.genRegHandler(int(reg2), "closetop")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[B1] = core.RegValues[reg2]
 
 		core.genRegHandler(int(reg3), "closebot")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[B2] = core.RegValues[reg3]
 		core.busHandler(int(B1))
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.busHandler(int(B2))
 		time.Sleep(core.SleepTime * time.Millisecond)
 	case 8:
@@ -47,7 +44,6 @@ func (core *Config) threeRegister(count int) int {
 	case 9:
 		core.genRegHandler(int(reg2), "opentop")
 		core.genRegHandler(int(reg3), "openbot")
-		time.Sleep(core.SleepTime * time.Millisecond)
 
 		if core.Opcode == "ADD" {
 			core.RegValues[ACC] = core.RegValues[ALUL] + core.RegValues[ALUR]
@@ -70,7 +66,6 @@ func (core *Config) threeRegister(count int) int {
 	case 10:
 
 		core.accHandler("close")
-		time.Sleep(core.SleepTime * time.Millisecond)
 		core.RegValues[DABA] = core.RegValues[ACC]
 		core.RegValues[DABB] = core.RegValues[ACC]
 
@@ -80,7 +75,6 @@ func (core *Config) threeRegister(count int) int {
 
 			core.cntlRegHandler(int(DA), "closein")
 			core.RegValues[DA] = core.RegValues[DABB]
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.cntlRegHandler(int(DA), "show")
 			time.Sleep(core.SleepTime * time.Millisecond)
@@ -95,7 +89,6 @@ func (core *Config) threeRegister(count int) int {
 	case 11:
 
 		core.accHandler("open")
-		time.Sleep(core.SleepTime * time.Millisecond)
 
 		if core.Opcode == "LDW" || core.Opcode == "STW" {
 			core.cntlRegHandler(int(DA), "openin")
@@ -113,17 +106,14 @@ func (core *Config) threeRegister(count int) int {
 		if core.Opcode == "LDW" {
 
 			core.cntlRegHandler(int(DA), "closeout")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.memHandler(int(DA))
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.RegValues[DR] = core.CoreMemory[core.RegValues[DA]]
 			core.memHandler(int(DR))
 			time.Sleep(core.SleepTime * time.Millisecond)
 		} else if core.Opcode == "STW" {
 			core.genRegHandler(int(reg1), "closetop")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.RegValues[B1] = core.RegValues[reg1]
 			core.RegValues[DABA] = core.RegValues[reg1]
 			core.RegValues[DABB] = core.RegValues[reg1]
@@ -135,68 +125,65 @@ func (core *Config) threeRegister(count int) int {
 			core.busHandler(int(DABB))
 			core.RegValues[DR] = core.RegValues[reg1]
 			core.cntlRegHandler(int(DR), "show")
+			time.Sleep(core.SleepTime * time.Millisecond)
 		}
 	case 13:
 		if core.Opcode == "LDW" {
 
 			core.cntlRegHandler(int(DA), "openout")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.cntlRegHandler(int(DR), "closeout")
 			core.cntlRegHandler(int(DR), "indirection")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.cntlRegHandler(int(DR), "show")
 
 			time.Sleep(core.SleepTime * time.Millisecond)
 		} else if core.Opcode == "STW" {
 			core.genRegHandler(int(reg1), "opentop")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.busGateHandler(int(B1DAB), "open")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.cntlRegHandler(int(DR), "openin")
+			time.Sleep(core.SleepTime * time.Millisecond)
 		}
 	case 14:
 		if core.Opcode == "LDW" {
 			core.cntlRegHandler(int(DR), "closeout")
 			core.cntlRegHandler(int(DR), "indirection")
-			time.Sleep(core.SleepTime * time.Millisecond)
 			core.cntlRegHandler(int(DR), "show")
 
-			time.Sleep(core.SleepTime * time.Millisecond)
-
 			core.cntlRegHandler(int(DR), "openout")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.cntlRegHandler(int(DR), "closein")
 			core.cntlRegHandler(int(DR), "indirection")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.RegValues[DABA] = core.RegValues[DR]
 			core.busHandler(int(DABA))
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.RegValues[DABB] = core.RegValues[DR]
 			core.busHandler(int(DABB))
 			time.Sleep(core.SleepTime * time.Millisecond)
 		} else if core.Opcode == "STW" {
+
+			core.cntlRegHandler(int(DA), "closeout")
 			core.cntlRegHandler(int(DR), "closeout")
 			core.cntlRegHandler(int(DR), "outdirection")
+			core.CoreMemory[core.RegValues[DA]] = core.RegValues[DR]
+
+			core.memHandler(int(DA))
 			core.memHandler(int(DR))
+			time.Sleep(core.SleepTime * time.Millisecond)
 		}
 	case 15:
 		if core.Opcode == "LDW" {
 
 			core.cntlRegHandler(int(DR), "openin")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.RegValues[reg1] = core.RegValues[DABA]
 
 			core.genRegHandler(int(reg1), "closein")
-			time.Sleep(core.SleepTime * time.Millisecond)
 
 			core.genRegHandler(int(reg1), "show")
 			time.Sleep(core.SleepTime * time.Millisecond)
 		} else if core.Opcode == "STW" {
+			core.cntlRegHandler(int(DA), "openout")
 			core.cntlRegHandler(int(DR), "openout")
 			time.Sleep(core.SleepTime * time.Millisecond)
 			core.OperationClass = "fetch"
