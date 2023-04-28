@@ -84,15 +84,20 @@ start:               ldi     r0 ZERO
                
                      ;initialize Left digit stack, 
                      ;Right digit stack and operator storage
-                     ldi    r7 initopcLRstk:HI
+readInput:           ldi    r7 initopcLRstk:HI
                      shl    r7 r7 8
                      addi   r7 initopcLRstk:LO 
                      call   r7
 
                      ;initialize input/output buffer
-readInput:           ldi    r7 initBuffer:hi
+                     ldi    r7 initBuffer:hi
                      shl    r7 r7 8
                      addi   r7 initBuffer:lo
+                     call   r7
+                     ldi    r6 zero
+                     ldi    r7 putR6Operator:hi
+                     shl    r7 r7 8
+                     addi   r7 putR6Operator:lo
                      call   r7
 
                      ;read cmdline input into buffer
@@ -163,12 +168,15 @@ readInput:           ldi    r7 initBuffer:hi
  endProgram:         halt
 
 
-callError:           ldi    r7 error:hi
+callInputError:      ldi    r7 error:hi
                      shl    r7 r7 8
                      addi   r7 error:lo
                      call   r7
-                     ldi    r0 255
-                     halt
+                     ldi    r7 readInput:hi
+                     shl    r7 r7 8
+                     addi   r7 readInput:lo
+                     jump   r7
+                     
 
 
 testInput:           ldi    r7 opdLstk:hi
@@ -177,9 +185,9 @@ testInput:           ldi    r7 opdLstk:hi
                      ldi    r0 zero
                      ldw    r1 r7 r0
                      cmpi   r1 1
-                     ldi    r5 callError:hi
+                     ldi    r5 callInputError:hi
                      shl    r5 r5 8
-                     addi   r5 callError:lo
+                     addi   r5 callInputError:lo
                      bflag  r5 EQ
 
                      ldi    r7 opdRstk:hi
@@ -207,10 +215,10 @@ testInput:           ldi    r7 opdLstk:hi
                      cmpi   r1 char/                 
                      bflag  r6 EQ
 
-                     ldi    r5 callError:hi
+                     ldi    r5 callInputError:hi
                      shl    r5 r5 8
-                     addi   r5 callError:lo
-                     call   r5
+                     addi   r5 callInputError:lo
+                     jump   r5
 
 
 testInputOk:         rtrn
@@ -339,6 +347,13 @@ readopdR:            ldi    r7 getR6BufferNext:hi
                      rtrn
 
 
+callEvalError:       ldi    r7 error:hi
+                     shl    r7 r7 8
+                     addi   r7 error:lo
+                     call   r7
+
+                     halt
+
 evaluate:            ldi    r7 initBuffer:hi
                      shl    r7 r7 8
                      addi   r7 initBuffer:lo
@@ -370,9 +385,9 @@ evaluate:            ldi    r7 initBuffer:hi
                      cmpi   r3 char/                 
                      bflag  r7 EQ
 
-                     ldi    r5 callError:hi
+                     ldi    r5 callEvalError:hi
                      shl    r5 r5 8
-                     addi   r5 callError:lo
+                     addi   r5 callEvalError:lo
                      call   r5
 
 
