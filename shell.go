@@ -52,15 +52,18 @@ func (core *Config) shell() {
 	fmt.Println("L - load ./source.hex")
 
 	fmt.Print(cursor.MoveTo(17, 135))
-	fmt.Println("S - step one cycle")
+	fmt.Println("I - step one Instruction")
 
 	fmt.Print(cursor.MoveTo(18, 135))
-	fmt.Println("G - go run program")
+	fmt.Println("S - step one cycle")
 
 	fmt.Print(cursor.MoveTo(19, 135))
-	fmt.Println("B - break at NOOP for debug. S or G to resume.")
+	fmt.Println("G - go run program")
 
 	fmt.Print(cursor.MoveTo(20, 135))
+	fmt.Println("B - break at NOOP for debug. S or G to resume.")
+
+	fmt.Print(cursor.MoveTo(21, 135))
 	fmt.Println("H - halt")
 
 	fmt.Print(cursor.MoveTo(22, 135))
@@ -133,6 +136,8 @@ func (core *Config) shell() {
 				core.OperationClass = "fetch"
 				core.CoreMemPoint = 0
 				tickCount = 1
+			} else if input == "I" {
+				core.runAll(input)
 			} else if input == "G" {
 				core.runAll(input)
 			} else if input == "B" {
@@ -159,6 +164,10 @@ func (core *Config) runAll(key string) {
 			tickCount = core.fetchInstruction(tickCount)
 		case "translate":
 			tickCount = core.translateInstruction(tickCount)
+			if key == "I" {
+				tickCount = 8
+				return
+			}
 		case "3Register":
 			tickCount = core.threeRegister(tickCount)
 		case "shift":
@@ -182,7 +191,7 @@ func (core *Config) runAll(key string) {
 		case "Halt":
 			return
 		case "NOOP":
-			if key == "B" {
+			if key == "B" || key == "I" {
 				return
 			}
 			tickCount = core.noop()

@@ -1,14 +1,23 @@
 
+
 ZERO:      DBYTE   0         ;constants ZERO and ONE
 ONE:       DBYTE   1
+
 char*:     dbyte  42
+
+
 
 buffer:lo:           dbyte  255
 buffer:hi:           dbyte  66
 
+
+
 start:              ldi     r0 ZERO
                     not     r0 r0
-                    ldsr    r0                    
+                    ldsr    r0
+                 
+
+                    ;read cmdline input into buffer
 readCmdLine:        ldi     r0 buffer:hi
                     shl     r0 r0 8
                     addi    r0 buffer:lo       
@@ -30,6 +39,7 @@ readCmdLine:        ldi     r0 buffer:hi
                     shl     r7 r7 8
                     addi    r7 readCmdLine:lo
                     jump    r7
+
  endProgram:        halt
 
 
