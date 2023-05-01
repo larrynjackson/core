@@ -41,30 +41,30 @@ func (core *Config) shell() {
 
 	fmt.Print(cursor.Hide())
 	fmt.Print(cursor.MoveTo(13, 135))
-	fmt.Println("[U,D] - toggle delay")
+	fmt.Println("[U,D] - TOGGLE DELAY")
 	fmt.Print(cursor.MoveTo(14, 135))
-	fmt.Println("R - reset core")
+	fmt.Println("R - RESET CORE")
 
 	fmt.Print(cursor.MoveTo(15, 135))
-	fmt.Println("A - assemble ./source.asm")
+	fmt.Println("A - ASSEMBLE ./source.asm")
 
 	fmt.Print(cursor.MoveTo(16, 135))
-	fmt.Println("L - load ./source.hex")
+	fmt.Println("L - LOAD ./source.hex")
 
 	fmt.Print(cursor.MoveTo(17, 135))
-	fmt.Println("I - step one Instruction")
+	fmt.Println("I - STEP ONE INSTRUCTION")
 
 	fmt.Print(cursor.MoveTo(18, 135))
-	fmt.Println("S - step one cycle")
+	fmt.Println("S - STEP ONE CYCLE")
 
 	fmt.Print(cursor.MoveTo(19, 135))
-	fmt.Println("G - go run program")
+	fmt.Println("G - GO RUN PROGRAM")
 
 	fmt.Print(cursor.MoveTo(20, 135))
-	fmt.Println("B - break at NOOP for debug. S or G to resume.")
+	fmt.Println("B - BREAK AT NOOP. S, I, G TO RESUME.")
 
 	fmt.Print(cursor.MoveTo(21, 135))
-	fmt.Println("H - halt")
+	fmt.Println("H - HALT")
 
 	fmt.Print(cursor.MoveTo(22, 135))
 	fmt.Println("$ ")
