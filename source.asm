@@ -9,6 +9,7 @@
 ; so multiply and divide operations on large numbers will take a very long time
 ; subtraction may show a negative number, but negative numbers are not legal
 ; division produces quotient and remainder. ex: 56/5 yields 11 r 1
+; Q in the first position to quit
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -114,6 +115,7 @@ readInput:           ldi    r7 initopcLRstk:HI
                      shl    r0 r0 8
                      addi   r0 buffer:lo       
                      in     r0
+                     noop
 
                      ldi    r7 seeR6BufferNext:hi
                      shl    r7 r7 8
