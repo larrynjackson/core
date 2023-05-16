@@ -78,6 +78,10 @@ func (core *Config) push(count int) int {
 		core.cntlRegHandler(int(DR), "openout")
 		time.Sleep(core.SleepTime * time.Millisecond)
 
+		if core.DebugMode {
+			core.printStack()
+		}
+
 		core.OperationClass = "fetch"
 		core.clockTick(count)
 		fmt.Print(cursor.Hide())

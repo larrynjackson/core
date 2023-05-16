@@ -28,10 +28,12 @@ type Assembler struct {
 	adrMemPointer uint16
 	CoreMemory    []uint16
 	lineCount     int
+	homeColunm    int
 }
 
-func (asm *Assembler) Assemble(CoreMemory []uint16, asmCmd string) bool {
+func (asm *Assembler) Assemble(homeColumn int, CoreMemory []uint16, asmCmd string) bool {
 
+	asm.homeColunm = homeColumn
 	asm.CoreMemory = CoreMemory
 
 	asm.asmFileName = "source.asm"
@@ -95,7 +97,7 @@ func (asm *Assembler) loadCoreMemFromFile() bool {
 			fmt.Print(strings.ToUpper("Failed to load hexFile into CoreMemory"))
 			fmt.Print(cursor.MoveTo(46, 140))
 			fmt.Print(strings.ToUpper(err.Error()))
-			fmt.Print(cursor.MoveTo(22, 137))
+			fmt.Print(cursor.MoveTo(22, asm.homeColunm))
 			fmt.Print(cursor.Show())
 			return false
 		}
@@ -110,7 +112,7 @@ func (asm *Assembler) loadCoreMemFromFile() bool {
 	fmt.Print(cursor.MoveTo(46, 140))
 	fmt.Print("                                                                                 ")
 	fmt.Print(cursor.Show())
-	fmt.Print(cursor.MoveTo(22, 137))
+	fmt.Print(cursor.MoveTo(22, asm.homeColunm))
 
 	return true
 }
@@ -128,7 +130,7 @@ func (asm *Assembler) outputErrorMsg(statement []string, msg string) {
 	fmt.Print(cursor.MoveTo(46, 140))
 	fmt.Printf(strings.ToUpper(msg)+" %d", asm.lineCount)
 
-	fmt.Print(cursor.MoveTo(22, 137))
+	fmt.Print(cursor.MoveTo(22, asm.homeColunm))
 	fmt.Print(cursor.Show())
 }
 
@@ -259,7 +261,7 @@ func (asm *Assembler) passTwo() bool {
 		fmt.Print(cursor.MoveTo(46, 140))
 		fmt.Print("                                                                                 ")
 		fmt.Print(cursor.Show())
-		fmt.Print(cursor.MoveTo(22, 137))
+		fmt.Print(cursor.MoveTo(22, asm.homeColunm))
 	}
 	return okPassTwo
 }
@@ -697,6 +699,7 @@ func (asm *Assembler) loadRegOneMap() {
 	asm.regOneMap["IN"] = 49152
 	asm.regOneMap["LDSR"] = 51200
 	asm.regOneMap["CALL"] = 55296
+	asm.regOneMap["MVSR"] = 59392
 }
 
 func (asm *Assembler) loadOpcClassMap() {
@@ -726,6 +729,7 @@ func (asm *Assembler) loadOpcClassMap() {
 	asm.opcClassMap["OUT"] = "1args"
 	asm.opcClassMap["IN"] = "1args"
 	asm.opcClassMap["LDSR"] = "1args"
+	asm.opcClassMap["MVSR"] = "1args"
 	asm.opcClassMap["NOOP"] = "0args"
 	asm.opcClassMap["CALL"] = "1args"
 	asm.opcClassMap["RTRN"] = "0args"
@@ -764,5 +768,6 @@ func (asm *Assembler) loadOpCodeMap() {
 	asm.opCodeMap["NOOP"] = 53248
 	asm.opCodeMap["CALL"] = 55296
 	asm.opCodeMap["RTRN"] = 57344
+	asm.opCodeMap["MVSR"] = 59392
 
 }

@@ -9,7 +9,7 @@ import (
 func (core *Config) translateInstruction(count int) int {
 
 	fmt.Print(cursor.Hide())
-	OpCodeArray := []string{"HALT", "ADD", "SUB", "AND", "XOR", "OR", "LDW", "STW", "SHL", "SHR", "NOT", "CMP", "BFLAG", "ADDI", "SUBI", "ANDI", "XORI", "ORI", "LDI", "CMPI", "JUMP", "PUSH", "POP", "OUT", "IN", "LDSR", "NOOP", "CALL", "RTRN"}
+	OpCodeArray := []string{"HALT", "ADD", "SUB", "AND", "XOR", "OR", "LDW", "STW", "SHL", "SHR", "NOT", "CMP", "BFLAG", "ADDI", "SUBI", "ANDI", "XORI", "ORI", "LDI", "CMPI", "JUMP", "PUSH", "POP", "OUT", "IN", "LDSR", "NOOP", "CALL", "RTRN", "MVSR"}
 	regArray := []string{"R0", "R1", "R2", "R3", "R4", "R5", "R6", "R7"}
 
 	var opCodeMask uint16 = 0xF800
@@ -98,8 +98,13 @@ func (core *Config) translateInstruction(count int) int {
 		reg1 := core.RegValues[IR] & reg1Mask
 		reg1 = reg1 >> 8
 		instString += "  " + regArray[reg1]
-	} else {
+	} else if opCode == 28 {
 		core.OperationClass = "rtrn"
+	} else if opCode == 29 {
+		reg1 := core.RegValues[IR] & reg1Mask
+		reg1 = reg1 >> 8
+		instString += "  " + regArray[reg1]
+		core.OperationClass = "mvsr"
 	}
 
 	core.InstructionString = core.Opcode + instString

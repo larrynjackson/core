@@ -81,6 +81,10 @@ func (core *Config) pop(count int) int {
 		core.genRegHandler(int(reg1), "show")
 		time.Sleep(core.SleepTime * time.Millisecond)
 
+		if core.DebugMode {
+			core.printStack()
+		}
+
 		core.OperationClass = "fetch"
 		core.clockTick(count)
 		fmt.Print(cursor.Hide())

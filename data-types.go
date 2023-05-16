@@ -402,7 +402,7 @@ func (core *Config) clockTick(tickCount int) {
 
 	fmt.Print(cursor.Show())
 	core.cursorHome()
-	core.setOutputHome()
+	//core.setOutputHome()
 }
 
 func (core *Config) drawScreen() {
@@ -948,11 +948,12 @@ func (core *Config) resetCore() {
 	fmt.Printf("0x%04X", 0)
 	time.Sleep(core.SleepTime * time.Millisecond)
 
-	fmt.Print(cursor.MoveTo(2, 136))
+	fmt.Print(cursor.MoveTo(2, 141))
+	//fmt.Print(cursor.MoveTo(2, 136))
 	fmt.Printf("%2s", SP)
 
-	core.clearIO()
+	//core.clearIO()
 	core.cursorHome()
-	core.setOutputHome()
+	//core.setOutputHome()
 	fmt.Print(cursor.Show())
 }

@@ -36,6 +36,7 @@ type Config struct {
 	OutCol            int
 	IOmem             map[int]string
 	IOrwCol           int
+	DebugMode         bool
 }
 
 type Regval int
@@ -68,9 +69,13 @@ const (
 	B1DAB // no storage, just used as a key
 	B2DAB // no storage, just used as a key
 )
+const homeColumn int = 142
+const menuColumn int = 140
 
-const ioMemTopRow int = 26
-const ioTypingLine int = 41
+const ioStackMemTopRow int = 9
+
+const ioMemTopRow int = 28
+const ioTypingLine int = 43
 const ioMemCol int = 124
 const ioTypingCol int = 122
 
@@ -81,6 +86,7 @@ func main() {
 	core.OperationClass = "fetch"
 	core.CoreMemPoint = 0
 	core.IOrwCol = ioMemCol
+	core.DebugMode = false
 
 	core.IOmem = make(map[int]string)
 

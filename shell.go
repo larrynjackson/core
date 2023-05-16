@@ -11,21 +11,24 @@ import (
 	"github.com/mattn/go-tty"
 )
 
-func (core *Config) clearIO() {
-	fmt.Print(cursor.MoveTo(37, 108))
-	fmt.Println("   ")
-	fmt.Print(cursor.MoveTo(41, 108))
-	fmt.Println("   ")
-}
+//const homeColumn = 142
+//const menuColumn = 140
+
+// func (core *Config) clearIO() {
+// 	fmt.Print(cursor.MoveTo(37, 108))
+// 	fmt.Println("   ")
+// 	fmt.Print(cursor.MoveTo(41, 108))
+// 	fmt.Println("   ")
+// }
 
 func (core *Config) cursorHome() {
-	fmt.Print(cursor.MoveTo(22, 137))
+	fmt.Print(cursor.MoveTo(22, homeColumn))
 }
 
-func (core *Config) setOutputHome() {
-	core.OutRow = 37
-	core.OutCol = 108
-}
+// func (core *Config) setOutputHome() {
+// 	core.OutRow = 37
+// 	core.OutCol = 108
+// }
 
 func (core *Config) shell() {
 
@@ -40,35 +43,35 @@ func (core *Config) shell() {
 	}()
 
 	fmt.Print(cursor.Hide())
-	fmt.Print(cursor.MoveTo(13, 135))
+	fmt.Print(cursor.MoveTo(13, menuColumn))
 	fmt.Println("[U,D] - TOGGLE DELAY")
-	fmt.Print(cursor.MoveTo(14, 135))
+	fmt.Print(cursor.MoveTo(14, menuColumn))
 	fmt.Println("R - RESET CORE")
 
-	fmt.Print(cursor.MoveTo(15, 135))
+	fmt.Print(cursor.MoveTo(15, menuColumn))
 	fmt.Println("A - ASSEMBLE ./source.asm")
 
-	fmt.Print(cursor.MoveTo(16, 135))
+	fmt.Print(cursor.MoveTo(16, menuColumn))
 	fmt.Println("L - LOAD ./source.hex")
 
-	fmt.Print(cursor.MoveTo(17, 135))
+	fmt.Print(cursor.MoveTo(17, menuColumn))
 	fmt.Println("I - STEP ONE INSTRUCTION")
 
-	fmt.Print(cursor.MoveTo(18, 135))
+	fmt.Print(cursor.MoveTo(18, menuColumn))
 	fmt.Println("S - STEP ONE CYCLE")
 
-	fmt.Print(cursor.MoveTo(19, 135))
+	fmt.Print(cursor.MoveTo(19, menuColumn))
 	fmt.Println("G - GO RUN PROGRAM")
 
-	fmt.Print(cursor.MoveTo(20, 135))
+	fmt.Print(cursor.MoveTo(20, menuColumn))
 	fmt.Println("B - BREAK AT NOOP. S, I, G TO RESUME.")
 
-	fmt.Print(cursor.MoveTo(21, 135))
+	fmt.Print(cursor.MoveTo(21, menuColumn))
 	fmt.Println("H - HALT")
 
-	fmt.Print(cursor.MoveTo(22, 135))
+	fmt.Print(cursor.MoveTo(22, menuColumn))
 	fmt.Println("$ ")
-	fmt.Print(cursor.MoveTo(22, 137))
+	fmt.Print(cursor.MoveTo(22, homeColumn))
 	fmt.Print(cursor.Show())
 
 	tty, err := tty.Open()
@@ -85,11 +88,11 @@ func (core *Config) shell() {
 			log.Fatal(err)
 		}
 		if r != 0 {
-			fmt.Print(cursor.MoveTo(22, 137))
+			fmt.Print(cursor.MoveTo(22, homeColumn))
 			input := strings.ToUpper(string(r))
 
 			fmt.Println(input)
-			fmt.Print(cursor.MoveTo(22, 137))
+			fmt.Print(cursor.MoveTo(22, homeColumn))
 			fmt.Print(cursor.Show())
 
 			if input == "H" {
@@ -99,6 +102,7 @@ func (core *Config) shell() {
 			} else if input == "D" && core.SleepTime > 0 {
 				core.SleepTime -= 1
 			} else if input == "S" {
+				core.DebugMode = true
 				switch core.OperationClass {
 				case "fetch":
 					tickCount = core.fetchInstruction(tickCount)
@@ -118,6 +122,8 @@ func (core *Config) shell() {
 					tickCount = core.jump(tickCount)
 				case "ldsr":
 					tickCount = core.loadSR(tickCount)
+				case "mvsr":
+					tickCount = core.moveSR(tickCount)
 				case "push":
 					tickCount = core.push(tickCount)
 				case "pop":
@@ -132,20 +138,26 @@ func (core *Config) shell() {
 					tickCount = core.rtrn(tickCount)
 				}
 			} else if input == "R" {
+				core.DebugMode = false
+				core.clearPrintStack()
 				core.resetCore()
 				core.OperationClass = "fetch"
 				core.CoreMemPoint = 0
 				tickCount = 1
 			} else if input == "I" {
+				core.DebugMode = true
 				core.runAll(input)
 			} else if input == "G" {
+				core.DebugMode = false
+				core.clearPrintStack()
 				core.runAll(input)
 			} else if input == "B" {
+				core.DebugMode = true
 				core.runAll(input)
 			} else if input == "A" {
-				core.ASM.Assemble(core.CoreMemory[:], "assemble")
+				core.ASM.Assemble(homeColumn, core.CoreMemory[:], "assemble")
 			} else if input == "L" {
-				core.ASM.Assemble(core.CoreMemory[:], "loadCore")
+				core.ASM.Assemble(homeColumn, core.CoreMemory[:], "loadCore")
 			}
 		}
 
@@ -182,6 +194,8 @@ func (core *Config) runAll(key string) {
 			tickCount = core.jump(tickCount)
 		case "ldsr":
 			tickCount = core.loadSR(tickCount)
+		case "mvsr":
+			tickCount = core.moveSR(tickCount)
 		case "push":
 			tickCount = core.push(tickCount)
 		case "pop":
