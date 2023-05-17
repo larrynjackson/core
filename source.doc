@@ -2,41 +2,41 @@
 
 
 
+               ZERO                        DBYTE   0  
+               ONE                         DBYTE   1  
                TWO                         DBYTE   2  
                THREE                       DBYTE   3  
                FOUR                        DBYTE   4  
                BUFFER:LO                   DBYTE   255  
                BUFFER:HI                   DBYTE   66  
-               ZERO                        DBYTE   0  
-               ONE                         DBYTE   1  
 
 
-               QS:HI                       DBYTE   0  
-               PARTITION:HI                DBYTE   0  
-               BREAKFORJ--:LO              DBYTE   140  
-               DOFORONE:HI                 DBYTE   0  
-               DOFORONE:LO                 DBYTE   106  
-               START:LO                    DBYTE   0  
-               BUFFERLENGTH:LO             DBYTE   11  
-               ENDMAIN:HI                  DBYTE   0  
-               ENDMAIN:LO                  DBYTE   28  
-               DOIF:HI                     DBYTE   0  
-               DOIF:LO                     DBYTE   56  
-               BUFFERLENGTH:HI             DBYTE   0  
-               MAIN:LO                     DBYTE   20  
-               ENDIF:LO                    DBYTE   50  
-               RETPARTITION:HI             DBYTE   0  
-               RETPARTITION:LO             DBYTE   60  
-               PARTITION:LO                DBYTE   92  
-               BREAKFORJ--:HI              DBYTE   0  
-               ENDFORLOOPS:HI              DBYTE   0  
-               START:HI                    DBYTE   0  
-               MAIN:HI                     DBYTE   0  
-               QS:LO                       DBYTE   33  
                ENDIF:HI                    DBYTE   0  
+               DOIF:HI                     DBYTE   0  
                DOFORTWO:HI                 DBYTE   0  
                DOFORTWO:LO                 DBYTE   123  
+               START:HI                    DBYTE   0  
+               BUFFERLENGTH:HI             DBYTE   0  
+               BUFFERLENGTH:LO             DBYTE   11  
+               QS:HI                       DBYTE   0  
                ENDFORLOOPS:LO              DBYTE   157  
+               DOIF:LO                     DBYTE   56  
+               RETPARTITION:HI             DBYTE   0  
+               DOFORONE:LO                 DBYTE   106  
+               BREAKFORJ--:HI              DBYTE   0  
+               BREAKFORJ--:LO              DBYTE   140  
+               ENDFORLOOPS:HI              DBYTE   0  
+               START:LO                    DBYTE   0  
+               MAIN:HI                     DBYTE   0  
+               ENDIF:LO                    DBYTE   50  
+               RETPARTITION:LO             DBYTE   60  
+               PARTITION:HI                DBYTE   0  
+               PARTITION:LO                DBYTE   92  
+               DOFORONE:HI                 DBYTE   0  
+               MAIN:LO                     DBYTE   20  
+               ENDMAIN:HI                  DBYTE   0  
+               ENDMAIN:LO                  DBYTE   28  
+               QS:LO                       DBYTE   33  
 
 
 00000  0x9000  START:            LDI       R0 ZERO 

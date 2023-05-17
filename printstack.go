@@ -12,17 +12,23 @@ func (core *Config) printStack() {
 	fmt.Printf("%6s", "stack")
 	core.clearPrintStack()
 
-	var stackSize int = 65535 - int(core.RegValues[SR])
-	var j uint16 = core.RegValues[SR] + 1
+	var start int = int(core.RegValues[SR]) + 1
+	var end int
 
-	for i := 0; i < stackSize; i++ {
+	if 65535-int(core.RegValues[SR]) > 20 {
+		end = int(core.RegValues[SR]) + 20
+	} else {
+		end = 65535
+	}
 
-		if j <= 65535 {
-			fmt.Print(cursor.MoveTo(ioStackMemTopRow+i, ioMemCol))
-			fmt.Printf("%5d", core.CoreMemory[j])
-			j++
-		}
+	var j uint16 = uint16(start)
+	var k int = 0
 
+	for i := start; i < end; i++ {
+		fmt.Print(cursor.MoveTo(ioStackMemTopRow+k, ioMemCol))
+		fmt.Printf("%5d", core.CoreMemory[j])
+		j++
+		k++
 	}
 
 }
