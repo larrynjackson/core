@@ -52,10 +52,6 @@ main:               ldi     r7 qs:hi
                     push    r5                  ;push R on the stack
                     call    r7                  ;call qs
                    
-                    pop     r0
-                    pop     r0
-                    pop     r0
-
 
 endMain:            ldi     r7 buffer:hi
                     shl     r7 r7 8
@@ -81,7 +77,7 @@ qs:                 MVSR    r0
                     shl     r7 r7 8
                     addi    r7 endIf:lo
                     bflag   r7 EQ
-                    
+
                     subi    r5 one
 
                     cmp     r5 r4               ; if r > l do if

@@ -2,41 +2,41 @@
 
 
 
-               BUFFER:HI                   DBYTE   66  
-               ZERO                        DBYTE   0  
-               ONE                         DBYTE   1  
                TWO                         DBYTE   2  
                THREE                       DBYTE   3  
                FOUR                        DBYTE   4  
                BUFFER:LO                   DBYTE   255  
+               BUFFER:HI                   DBYTE   66  
+               ZERO                        DBYTE   0  
+               ONE                         DBYTE   1  
 
 
-               BREAKFORJ--:LO              DBYTE   143  
-               START:HI                    DBYTE   0  
+               QS:HI                       DBYTE   0  
+               PARTITION:HI                DBYTE   0  
+               BREAKFORJ--:LO              DBYTE   140  
+               DOFORONE:HI                 DBYTE   0  
+               DOFORONE:LO                 DBYTE   106  
+               START:LO                    DBYTE   0  
                BUFFERLENGTH:LO             DBYTE   11  
                ENDMAIN:HI                  DBYTE   0  
-               ENDMAIN:LO                  DBYTE   31  
-               DOFORONE:LO                 DBYTE   109  
-               DOFORTWO:LO                 DBYTE   126  
-               START:LO                    DBYTE   0  
-               QS:HI                       DBYTE   0  
-               RETPARTITION:LO             DBYTE   63  
-               PARTITION:HI                DBYTE   0  
-               PARTITION:LO                DBYTE   95  
-               DOFORONE:HI                 DBYTE   0  
-               BREAKFORJ--:HI              DBYTE   0  
-               ENDFORLOOPS:HI              DBYTE   0  
+               ENDMAIN:LO                  DBYTE   28  
+               DOIF:HI                     DBYTE   0  
+               DOIF:LO                     DBYTE   56  
                BUFFERLENGTH:HI             DBYTE   0  
                MAIN:LO                     DBYTE   20  
-               ENDIF:HI                    DBYTE   0  
-               ENDIF:LO                    DBYTE   53  
-               DOIF:LO                     DBYTE   59  
-               ENDFORLOOPS:LO              DBYTE   160  
-               MAIN:HI                     DBYTE   0  
-               QS:LO                       DBYTE   36  
-               DOIF:HI                     DBYTE   0  
+               ENDIF:LO                    DBYTE   50  
                RETPARTITION:HI             DBYTE   0  
+               RETPARTITION:LO             DBYTE   60  
+               PARTITION:LO                DBYTE   92  
+               BREAKFORJ--:HI              DBYTE   0  
+               ENDFORLOOPS:HI              DBYTE   0  
+               START:HI                    DBYTE   0  
+               MAIN:HI                     DBYTE   0  
+               QS:LO                       DBYTE   33  
+               ENDIF:HI                    DBYTE   0  
                DOFORTWO:HI                 DBYTE   0  
+               DOFORTWO:LO                 DBYTE   123  
+               ENDFORLOOPS:LO              DBYTE   157  
 
 
 00000  0x9000  START:            LDI       R0 ZERO 
@@ -61,156 +61,153 @@
 00019  0x7501                    SUBI      R5 ONE 
 00020  0x9700  MAIN:             LDI       R7 QS:HI 
 00021  0x47F0                    SHL       R7 R7 8 
-00022  0x6F24                    ADDI      R7 QS:LO 
+00022  0x6F21                    ADDI      R7 QS:LO 
 00023  0x9400                    LDI       R4 ZERO 
 00024  0xAC00                    PUSH      R4 
 00025  0xAC00                    PUSH      R4 
 00026  0xAD00                    PUSH      R5 
 00027  0xDF00                    CALL      R7 
-00028  0xB000                    POP       R0 
-00029  0xB000                    POP       R0 
-00030  0xB000                    POP       R0 
-00031  0x9742  ENDMAIN:          LDI       R7 BUFFER:HI 
-00032  0x47F0                    SHL       R7 R7 8 
-00033  0x6FFF                    ADDI      R7 BUFFER:LO 
-00034  0xBF00                    OUT       R7 
-00035  0x0000                    HALT      
-00036  0xE800  QS:               MVSR      R0 
-00037  0x9102                    LDI       R1 TWO 
-00038  0x3504                    LDW       R5 R0 R1 
-00039  0x9103                    LDI       R1 THREE 
-00040  0x3404                    LDW       R4 R0 R1 
-00041  0x6D01                    ADDI      R5 ONE 
-00042  0x9D00                    CMPI      R5 ZERO 
-00043  0x9700                    LDI       R7 ENDIF:HI 
-00044  0x47F0                    SHL       R7 R7 8 
-00045  0x6F35                    ADDI      R7 ENDIF:LO 
-00046  0x6710                    BFLAG     R7 EQ 
-00047  0x7501                    SUBI      R5 ONE 
-00048  0x5D80                    CMP       R5 R4 
-00049  0x9700                    LDI       R7 DOIF:HI 
-00050  0x47F0                    SHL       R7 R7 8 
-00051  0x6F3B                    ADDI      R7 DOIF:LO 
-00052  0x6780                    BFLAG     R7 GT 
-00053  0xB600  ENDIF:            POP       R6 
-00054  0xB000                    POP       R0 
-00055  0xB000                    POP       R0 
-00056  0xB000                    POP       R0 
-00057  0xAE00                    PUSH      R6 
-00058  0xE000                    RTRN      
-00059  0x9700  DOIF:             LDI       R7 PARTITION:HI 
-00060  0x47F0                    SHL       R7 R7 8 
-00061  0x6F5F                    ADDI      R7 PARTITION:LO 
-00062  0xA700                    JUMP      R7 
-00063  0xE800  RETPARTITION:     MVSR      R0 
-00064  0x9104                    LDI       R1 FOUR 
-00065  0x3204                    LDW       R2 R0 R1 
-00066  0x7201                    SUBI      R2 ONE 
-00067  0x9103                    LDI       R1 THREE 
-00068  0x3C04                    STW       R4 R0 R1 
-00069  0xAA00                    PUSH      R2 
-00070  0xAC00                    PUSH      R4 
-00071  0xAA00                    PUSH      R2 
-00072  0x9700                    LDI       R7 QS:HI 
-00073  0x47F0                    SHL       R7 R7 8 
-00074  0x6F24                    ADDI      R7 QS:LO 
-00075  0xDF00                    CALL      R7 
-00076  0xE800                    MVSR      R0 
-00077  0x9104                    LDI       R1 FOUR 
-00078  0x3204                    LDW       R2 R0 R1 
-00079  0xAA00                    PUSH      R2 
-00080  0x6A01                    ADDI      R2 ONE 
-00081  0xAA00                    PUSH      R2 
-00082  0x9102                    LDI       R1 TWO 
-00083  0x3504                    LDW       R5 R0 R1 
-00084  0xAD00                    PUSH      R5 
-00085  0x9700                    LDI       R7 QS:HI 
-00086  0x47F0                    SHL       R7 R7 8 
-00087  0x6F24                    ADDI      R7 QS:LO 
-00088  0xDF00                    CALL      R7 
-00089  0xB600                    POP       R6 
-00090  0xB000                    POP       R0 
-00091  0xB000                    POP       R0 
-00092  0xB000                    POP       R0 
-00093  0xAE00                    PUSH      R6 
-00094  0xE000                    RTRN      
-00095  0xE800  PARTITION:        MVSR      R0 
-00096  0x9102                    LDI       R1 TWO 
-00097  0x3504                    LDW       R5 R0 R1 
-00098  0x9103                    LDI       R1 THREE 
-00099  0x3404                    LDW       R4 R0 R1 
-00100  0x9742                    LDI       R7 BUFFER:HI 
-00101  0x47F0                    SHL       R7 R7 8 
-00102  0x6FFF                    ADDI      R7 BUFFER:LO 
-00103  0x30F4                    LDW       R0 R7 R5 
-00104  0xAC00                    PUSH      R4 
-00105  0xB200                    POP       R2 
-00106  0x7201                    SUBI      R2 ONE 
-00107  0xAD00                    PUSH      R5 
-00108  0xB300                    POP       R3 
-00109  0x6A01  DOFORONE:         ADDI      R2 ONE 
-00110  0x9742                    LDI       R7 BUFFER:HI 
-00111  0x47F0                    SHL       R7 R7 8 
-00112  0x6FFF                    ADDI      R7 BUFFER:LO 
-00113  0x36E8                    LDW       R6 R7 R2 
-00114  0x5E00                    CMP       R6 R0 
-00115  0x9700                    LDI       R7 DOFORTWO:HI 
-00116  0x47F0                    SHL       R7 R7 8 
-00117  0x6F7E                    ADDI      R7 DOFORTWO:LO 
-00118  0x6780                    BFLAG     R7 GT 
-00119  0x6710                    BFLAG     R7 EQ 
-00120  0x5AA0                    CMP       R2 R5 
-00121  0x6710                    BFLAG     R7 EQ 
-00122  0x9700                    LDI       R7 DOFORONE:HI 
-00123  0x47F0                    SHL       R7 R7 8 
-00124  0x6F6D                    ADDI      R7 DOFORONE:LO 
-00125  0xA700                    JUMP      R7 
-00126  0x7301  DOFORTWO:         SUBI      R3 ONE 
-00127  0x9742                    LDI       R7 BUFFER:HI 
-00128  0x47F0                    SHL       R7 R7 8 
-00129  0x6FFF                    ADDI      R7 BUFFER:LO 
-00130  0x36EC                    LDW       R6 R7 R3 
-00131  0x5E00                    CMP       R6 R0 
-00132  0x9700                    LDI       R7 BREAKFORJ--:HI 
-00133  0x47F0                    SHL       R7 R7 8 
-00134  0x6F8F                    ADDI      R7 BREAKFORJ--:LO 
+00028  0x9742  ENDMAIN:          LDI       R7 BUFFER:HI 
+00029  0x47F0                    SHL       R7 R7 8 
+00030  0x6FFF                    ADDI      R7 BUFFER:LO 
+00031  0xBF00                    OUT       R7 
+00032  0x0000                    HALT      
+00033  0xE800  QS:               MVSR      R0 
+00034  0x9102                    LDI       R1 TWO 
+00035  0x3504                    LDW       R5 R0 R1 
+00036  0x9103                    LDI       R1 THREE 
+00037  0x3404                    LDW       R4 R0 R1 
+00038  0x6D01                    ADDI      R5 ONE 
+00039  0x9D00                    CMPI      R5 ZERO 
+00040  0x9700                    LDI       R7 ENDIF:HI 
+00041  0x47F0                    SHL       R7 R7 8 
+00042  0x6F32                    ADDI      R7 ENDIF:LO 
+00043  0x6710                    BFLAG     R7 EQ 
+00044  0x7501                    SUBI      R5 ONE 
+00045  0x5D80                    CMP       R5 R4 
+00046  0x9700                    LDI       R7 DOIF:HI 
+00047  0x47F0                    SHL       R7 R7 8 
+00048  0x6F38                    ADDI      R7 DOIF:LO 
+00049  0x6780                    BFLAG     R7 GT 
+00050  0xB600  ENDIF:            POP       R6 
+00051  0xB000                    POP       R0 
+00052  0xB000                    POP       R0 
+00053  0xB000                    POP       R0 
+00054  0xAE00                    PUSH      R6 
+00055  0xE000                    RTRN      
+00056  0x9700  DOIF:             LDI       R7 PARTITION:HI 
+00057  0x47F0                    SHL       R7 R7 8 
+00058  0x6F5C                    ADDI      R7 PARTITION:LO 
+00059  0xA700                    JUMP      R7 
+00060  0xE800  RETPARTITION:     MVSR      R0 
+00061  0x9104                    LDI       R1 FOUR 
+00062  0x3204                    LDW       R2 R0 R1 
+00063  0x7201                    SUBI      R2 ONE 
+00064  0x9103                    LDI       R1 THREE 
+00065  0x3C04                    STW       R4 R0 R1 
+00066  0xAA00                    PUSH      R2 
+00067  0xAC00                    PUSH      R4 
+00068  0xAA00                    PUSH      R2 
+00069  0x9700                    LDI       R7 QS:HI 
+00070  0x47F0                    SHL       R7 R7 8 
+00071  0x6F21                    ADDI      R7 QS:LO 
+00072  0xDF00                    CALL      R7 
+00073  0xE800                    MVSR      R0 
+00074  0x9104                    LDI       R1 FOUR 
+00075  0x3204                    LDW       R2 R0 R1 
+00076  0xAA00                    PUSH      R2 
+00077  0x6A01                    ADDI      R2 ONE 
+00078  0xAA00                    PUSH      R2 
+00079  0x9102                    LDI       R1 TWO 
+00080  0x3504                    LDW       R5 R0 R1 
+00081  0xAD00                    PUSH      R5 
+00082  0x9700                    LDI       R7 QS:HI 
+00083  0x47F0                    SHL       R7 R7 8 
+00084  0x6F21                    ADDI      R7 QS:LO 
+00085  0xDF00                    CALL      R7 
+00086  0xB600                    POP       R6 
+00087  0xB000                    POP       R0 
+00088  0xB000                    POP       R0 
+00089  0xB000                    POP       R0 
+00090  0xAE00                    PUSH      R6 
+00091  0xE000                    RTRN      
+00092  0xE800  PARTITION:        MVSR      R0 
+00093  0x9102                    LDI       R1 TWO 
+00094  0x3504                    LDW       R5 R0 R1 
+00095  0x9103                    LDI       R1 THREE 
+00096  0x3404                    LDW       R4 R0 R1 
+00097  0x9742                    LDI       R7 BUFFER:HI 
+00098  0x47F0                    SHL       R7 R7 8 
+00099  0x6FFF                    ADDI      R7 BUFFER:LO 
+00100  0x30F4                    LDW       R0 R7 R5 
+00101  0xAC00                    PUSH      R4 
+00102  0xB200                    POP       R2 
+00103  0x7201                    SUBI      R2 ONE 
+00104  0xAD00                    PUSH      R5 
+00105  0xB300                    POP       R3 
+00106  0x6A01  DOFORONE:         ADDI      R2 ONE 
+00107  0x9742                    LDI       R7 BUFFER:HI 
+00108  0x47F0                    SHL       R7 R7 8 
+00109  0x6FFF                    ADDI      R7 BUFFER:LO 
+00110  0x36E8                    LDW       R6 R7 R2 
+00111  0x5E00                    CMP       R6 R0 
+00112  0x9700                    LDI       R7 DOFORTWO:HI 
+00113  0x47F0                    SHL       R7 R7 8 
+00114  0x6F7B                    ADDI      R7 DOFORTWO:LO 
+00115  0x6780                    BFLAG     R7 GT 
+00116  0x6710                    BFLAG     R7 EQ 
+00117  0x5AA0                    CMP       R2 R5 
+00118  0x6710                    BFLAG     R7 EQ 
+00119  0x9700                    LDI       R7 DOFORONE:HI 
+00120  0x47F0                    SHL       R7 R7 8 
+00121  0x6F6A                    ADDI      R7 DOFORONE:LO 
+00122  0xA700                    JUMP      R7 
+00123  0x7301  DOFORTWO:         SUBI      R3 ONE 
+00124  0x9742                    LDI       R7 BUFFER:HI 
+00125  0x47F0                    SHL       R7 R7 8 
+00126  0x6FFF                    ADDI      R7 BUFFER:LO 
+00127  0x36EC                    LDW       R6 R7 R3 
+00128  0x5E00                    CMP       R6 R0 
+00129  0x9700                    LDI       R7 BREAKFORJ--:HI 
+00130  0x47F0                    SHL       R7 R7 8 
+00131  0x6F8C                    ADDI      R7 BREAKFORJ--:LO 
+00132  0x6710                    BFLAG     R7 EQ 
+00133  0x6740                    BFLAG     R7 LT 
+00134  0x9B00                    CMPI      R3 ZERO 
 00135  0x6710                    BFLAG     R7 EQ 
-00136  0x6740                    BFLAG     R7 LT 
-00137  0x9B00                    CMPI      R3 ZERO 
-00138  0x6710                    BFLAG     R7 EQ 
-00139  0x9700                    LDI       R7 DOFORTWO:HI 
-00140  0x47F0                    SHL       R7 R7 8 
-00141  0x6F7E                    ADDI      R7 DOFORTWO:LO 
-00142  0xA700                    JUMP      R7 
-00143  0x9742  BREAKFORJ--:      LDI       R7 BUFFER:HI 
-00144  0x47F0                    SHL       R7 R7 8 
-00145  0x6FFF                    ADDI      R7 BUFFER:LO 
-00146  0x31E8                    LDW       R1 R7 R2 
-00147  0x36EC                    LDW       R6 R7 R3 
-00148  0x3EE8                    STW       R6 R7 R2 
-00149  0x39EC                    STW       R1 R7 R3 
-00150  0x9700                    LDI       R7 ENDFORLOOPS:HI 
-00151  0x47F0                    SHL       R7 R7 8 
-00152  0x6FA0                    ADDI      R7 ENDFORLOOPS:LO 
-00153  0x5B40                    CMP       R3 R2 
-00154  0x6710                    BFLAG     R7 EQ 
-00155  0x6740                    BFLAG     R7 LT 
-00156  0x9700                    LDI       R7 DOFORONE:HI 
-00157  0x47F0                    SHL       R7 R7 8 
-00158  0x6F6D                    ADDI      R7 DOFORONE:LO 
-00159  0xA700                    JUMP      R7 
-00160  0x9742  ENDFORLOOPS:      LDI       R7 BUFFER:HI 
-00161  0x47F0                    SHL       R7 R7 8 
-00162  0x6FFF                    ADDI      R7 BUFFER:LO 
-00163  0x36E8                    LDW       R6 R7 R2 
-00164  0x3EEC                    STW       R6 R7 R3 
-00165  0x36F4                    LDW       R6 R7 R5 
-00166  0x3EE8                    STW       R6 R7 R2 
-00167  0x39F4                    STW       R1 R7 R5 
-00168  0xE800                    MVSR      R0 
-00169  0x9104                    LDI       R1 FOUR 
-00170  0x3A04                    STW       R2 R0 R1 
-00171  0x9700                    LDI       R7 RETPARTITION:HI 
-00172  0x47F0                    SHL       R7 R7 8 
-00173  0x6F3F                    ADDI      R7 RETPARTITION:LO 
-00174  0xA700                    JUMP      R7 
+00136  0x9700                    LDI       R7 DOFORTWO:HI 
+00137  0x47F0                    SHL       R7 R7 8 
+00138  0x6F7B                    ADDI      R7 DOFORTWO:LO 
+00139  0xA700                    JUMP      R7 
+00140  0x9742  BREAKFORJ--:      LDI       R7 BUFFER:HI 
+00141  0x47F0                    SHL       R7 R7 8 
+00142  0x6FFF                    ADDI      R7 BUFFER:LO 
+00143  0x31E8                    LDW       R1 R7 R2 
+00144  0x36EC                    LDW       R6 R7 R3 
+00145  0x3EE8                    STW       R6 R7 R2 
+00146  0x39EC                    STW       R1 R7 R3 
+00147  0x9700                    LDI       R7 ENDFORLOOPS:HI 
+00148  0x47F0                    SHL       R7 R7 8 
+00149  0x6F9D                    ADDI      R7 ENDFORLOOPS:LO 
+00150  0x5B40                    CMP       R3 R2 
+00151  0x6710                    BFLAG     R7 EQ 
+00152  0x6740                    BFLAG     R7 LT 
+00153  0x9700                    LDI       R7 DOFORONE:HI 
+00154  0x47F0                    SHL       R7 R7 8 
+00155  0x6F6A                    ADDI      R7 DOFORONE:LO 
+00156  0xA700                    JUMP      R7 
+00157  0x9742  ENDFORLOOPS:      LDI       R7 BUFFER:HI 
+00158  0x47F0                    SHL       R7 R7 8 
+00159  0x6FFF                    ADDI      R7 BUFFER:LO 
+00160  0x36E8                    LDW       R6 R7 R2 
+00161  0x3EEC                    STW       R6 R7 R3 
+00162  0x36F4                    LDW       R6 R7 R5 
+00163  0x3EE8                    STW       R6 R7 R2 
+00164  0x39F4                    STW       R1 R7 R5 
+00165  0xE800                    MVSR      R0 
+00166  0x9104                    LDI       R1 FOUR 
+00167  0x3A04                    STW       R2 R0 R1 
+00168  0x9700                    LDI       R7 RETPARTITION:HI 
+00169  0x47F0                    SHL       R7 R7 8 
+00170  0x6F3C                    ADDI      R7 RETPARTITION:LO 
+00171  0xA700                    JUMP      R7 
