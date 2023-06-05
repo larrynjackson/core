@@ -25,16 +25,18 @@ type Assembler struct {
 	shiftMap      map[string]uint16
 	flagMap       map[string]uint16
 	opcClassMap   map[string]string
+	DebugMap      map[int]string
 	adrMemPointer uint16
 	CoreMemory    []uint16
 	lineCount     int
 	homeColunm    int
 }
 
-func (asm *Assembler) Assemble(homeColumn int, CoreMemory []uint16, asmCmd string) bool {
+func (asm *Assembler) Assemble(homeColumn int, CoreMemory []uint16, asmCmd string, CoreDebugMap map[int]string) bool {
 
 	asm.homeColunm = homeColumn
 	asm.CoreMemory = CoreMemory
+	asm.DebugMap = CoreDebugMap
 
 	asm.asmFileName = "source.asm"
 	asm.docFileName = "source.doc"
@@ -287,14 +289,20 @@ func (asm *Assembler) writeToDocFile(statement []string, opCodeHex uint16) {
 	asm.docFile.WriteString(fmt.Sprintf("%05d  ", asm.adrMemPointer))
 	asm.docFile.WriteString(fmt.Sprintf("0x%04X  ", opCodeHex))
 
+	var debugString string = fmt.Sprintf("%05d  ", asm.adrMemPointer)
+	debugString += fmt.Sprintf("0x%04X  ", opCodeHex)
+
 	if strings.HasSuffix(statement[0], ":") {
 		for s := range statement {
 			if s == 0 {
 				asm.docFile.WriteString(adjustStringLength(statement[s], 18, "append"))
+				debugString += adjustStringLength(statement[s], 18, "append")
 			} else if s == 1 {
 				asm.docFile.WriteString(adjustStringLength(statement[s], 10, "append"))
+				debugString += adjustStringLength(statement[s], 10, "append")
 			} else {
 				asm.docFile.WriteString(statement[s] + " ")
+				debugString += statement[s] + " "
 			}
 		}
 	} else {
@@ -304,12 +312,15 @@ func (asm *Assembler) writeToDocFile(statement []string, opCodeHex uint16) {
 				tmpString = adjustStringLength(tmpString, 28, "append")
 
 				asm.docFile.WriteString(tmpString)
+				debugString += tmpString
 			} else {
 				asm.docFile.WriteString(statement[s] + " ")
+				debugString += statement[s] + " "
 			}
 		}
 	}
 
+	asm.DebugMap[int(asm.adrMemPointer)] = debugString
 	asm.docFile.WriteString("\n")
 }
 

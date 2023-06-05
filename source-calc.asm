@@ -1,3 +1,12 @@
+
+
+
+        
+     
+
+        
+        
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; simple 4 function calculator for integer arithmetic
 ; * / + -
@@ -12,12 +21,27 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-ZERO:      DBYTE   0         ;constants ZERO and ONE
-ONE:       DBYTE   1
-TWO:       DBYTE   2
-THREE:     DBYTE   3
-FOUR:      DBYTE   4
-FIVE:      DBYTE   5
+
+
+    ZERO:           DBYTE   0         
+    ONE:            DBYTE   1
+    TWO:            DBYTE   2
+    THREE:          DBYTE   3
+    FOUR:           DBYTE   4
+    FIVE:           DBYTE   5
+    SIX:            DBYTE   6
+    SEVEN:          DBYTE   7
+    EIGHT:          DBYTE   8
+
+    R0IDX:          DBYTE   2
+    R1IDX:          DBYTE   3
+    R2IDX:          DBYTE   4
+    R3IDX:          DBYTE   5
+    R4IDX:          DBYTE   6
+    R5IDX:          DBYTE   7
+    R6IDX:          DBYTE   8
+    R7IDX:          DBYTE   9
+
 
 chara:     dbyte  65         ;ascii chars A-Z
 charb:     dbyte  66
@@ -193,6 +217,7 @@ testInput:           ldi    r7 opdLstk:hi
                      addi   r7 opdLtop:lo
                      ldi    r0 zero
                      ldw    r1 r7 r0
+  
                      cmpi   r1 1
                      ldi    r5 callInputError:hi
                      shl    r5 r5 8
@@ -204,6 +229,7 @@ testInput:           ldi    r7 opdLstk:hi
                      addi   r7 opdRtop:lo
                      ldi    r0 zero
                      ldw    r1 r7 r0
+
                      cmpi   r1 1
                      bflag  r5 EQ
 
@@ -237,18 +263,16 @@ testInputOk:         rtrn
 
 
 
-callPushR6OpdLeft:   ldi    r7 pushR6OpdLeft:hi
-                     shl    r7 r7 8
-                     addi   r7 pushR6OpdLeft:lo
-                     call   r7
 
+                     ;call function. reads and places left side digits onto opdLeft stack.
+                     ;reads and places operator in save operator location
                      ;read next character from the buffer into r6
                      
 readopdL:            ldi    r7 getR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 getR6BufferNext:lo
                      call   r7
-                  
+                     ;on return the next character is in R6
 
                      ;eat beginning spaces
                      cmpi   r6 charsp
@@ -264,8 +288,8 @@ readopdL:            ldi    r7 getR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 isR6Digit:lo
                      call   r7
-
-                  
+                     ;on return R1 contains 0=false or 1=true
+                 
 
                      ldi    r7 callPushR6OpdLeft:hi
                      shl    r7 r7 8
@@ -314,14 +338,20 @@ callPushR6OpdRight:  ldi    r7 pushR6OpdRight:hi
                      shl    r7 r7 8
                      addi   r7 pushR6OpdRight:lo
                      call   r7
+                     ldi    r7 readopdR:hi
+                     shl    r7 r7 8
+                     addi   r7 readopdR:lo
+                     jump   r7
+                   
 
                      ;read next character from the buffer into r6
                      
 readopdR:            ldi    r7 getR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 getR6BufferNext:lo
-                     
+
                      call   r7
+                     ;on return next buffer element is in R6
             
 
                      ;eat beginning spaces
@@ -338,6 +368,7 @@ readopdR:            ldi    r7 getR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 isR6Digit:lo
                      call   r7
+                     ;on return R1=0 (false), R1=1 (true)
             
 
                      ldi    r7 callPushR6OpdRight:hi
@@ -401,7 +432,19 @@ evaluate:            ldi    r7 initBuffer:hi
 
 
 
-doadd:               add    r1 r2 r4      ;answer
+doadd:               ldi    r7 opdLvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdLvalue:lo
+                     ldi    r0 zero
+                     ldw    r2 r7 r0
+
+                     ldi    r7 opdRvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdRvalue:lo
+                     ldi    r0 zero
+                     ldw    r4 r7 r0
+
+                     add    r1 r2 r4      ;answer
 
                      ldi    r7 convAns2Str:hi
                      shl    r7 r7 8
@@ -415,21 +458,28 @@ ifIsSubNegative:     sub    r1 r4 r2      ;answer in r1
                      ldi    r7 putR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 putR6BufferNext:lo
-                     ;uses r0, r1, r5, r6, r7
-                     push   r1
-                     push   r2
-                     push   r4
+
                      call   r7
-                     pop    r4
-                     pop    r2
-                     pop    r1
+
                      ldi    r7 ifIsNotSubNegative:hi
                      shl    r7 r7 8
                      addi   r7 ifIsNotSubNegative:lo 
                      jump   r7 
                                        
      
-dosub:               ldi    r7 ifIsSubNegative:hi
+dosub:               ldi    r7 opdLvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdLvalue:lo
+                     ldi    r0 zero
+                     ldw    r2 r7 r0
+
+                     ldi    r7 opdRvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdRvalue:lo
+                     ldi    r0 zero
+                     ldw    r4 r7 r0
+
+                     ldi    r7 ifIsSubNegative:hi
                      shl    r7 r7 8
                      addi   r7 ifIsSubNegative:lo         
                      cmp    r2 r4
@@ -441,13 +491,29 @@ ifIsNotSubNegative:  ldi    r7 convAns2Str:hi
                      call   r7
                      rtrn
 
-domul:               push   r2            ;multiplicand
-                     push   r4            ;multiplier
+domul:               ldi    r7 opdLvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdLvalue:lo
+                     ldi    r0 zero
+                     ldw    r2 r7 r0
+
+                     ldi    r7 opdRvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdRvalue:lo
+                     ldi    r0 zero
+                     ldw    r4 r7 r0
+
+
+                     push   r2          ;multiplcand
+                     pop    r3
+                     push   r4          ;multiplier
+                     pop    r6
+
                      ldi    r7 multiply:hi
                      shl    r7 r7 8
                      addi   r7 multiply:lo
                      call   r7
-                     pop    r1            ;answer
+                   ;on return answer is in R1
                      ldi    r7 convAns2Str:hi
                      shl    r7 r7 8
                      addi   r7 convAns2Str:lo
@@ -457,12 +523,27 @@ domul:               push   r2            ;multiplicand
 
 
                     
-dodiv:               push   r2            ;dividend
+dodiv:               ldi    r7 opdLvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdLvalue:lo
+                     ldi    r0 zero
+                     ldw    r2 r7 r0
+
+                     ldi    r7 opdRvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdRvalue:lo
+                     ldi    r0 zero
+                     ldw    r4 r7 r0
+
+                     push   r2            ;dividend
+                     pop    r0
                      push   r4            ;divisor
+                     pop    r1
                      ldi    r7 divide:hi
                      shl    r7 r7 8
                      addi   r7 divide:lo
                      call   r7
+                     push   r2
                      pop    r1            ;quotient answer
                     
                      ldi    r7 convAns2Str:hi
@@ -473,21 +554,16 @@ dodiv:               push   r2            ;dividend
                      shl    r7 r7 8
                      addi   r7 putR6BufferNext:lo
 
-                     ldi    r6 charsp
-                     push   r7    
+                     ldi    r6 charsp                  
                      call   r7
-                     pop    r7
 
-                     ldi    r6 charr
-                     push   r7    
+                     ldi    r6 charr                
                      call   r7
-                     pop    r7
-
-                     ldi    r6 charsp
-                     push   r7    
+                
+                     ldi    r6 charsp                      
                      call   r7
-                     pop    r7
-
+                    
+                     push    r3
                      pop    r1                   ;remainder from initial divide
                      ldi    r7 convAns2Str:hi
                      shl    r7 r7 8
@@ -497,77 +573,96 @@ dodiv:               push   r2            ;dividend
 
                      rtrn
 
-
-
                      ;r1 contains answer number
 convAns2Str:         push   r1            ;dividend
+                     pop    r0
 
                      ldi    r4 39
                      shl    r4 r4 8
                      addi   r4 16
                      push   r4            ;divisor
+                     pop    r1
 
                      ldi    r7 divide:hi
                      shl    r7 r7 8
                      addi   r7 divide:lo
                      call   r7
 
-                     pop    r6            ;quotient
-                     pop    r2            ;remainder
+                     push   r2
+                     pop    r6
+                     push   r3
+                     pop    r2
+                     
                      ldi    r7 write10k:hi
                      shl    r7 r7 8
                      addi   r7 write10k:lo
                      cmpi   r6 zero
                      bflag  r7 GT
 done10kwrite:        push   r2
+                     pop    r0
 
                      ldi    r4 3
                      shl    r4 r4 8
                      addi   r4 232
                      push   r4            ;divisor    
+                     pop    r1
 
                      ldi    r7 divide:hi
                      shl    r7 r7 8
                      addi   r7 divide:lo
                      call   r7
 
+                     push   r2
+                     pop    r6
+                     push   r3
+                     pop    r2
 
-                     pop    r6            ;quotient
-                     pop    r2            ;remainder
                      ldi    r7 write1k:hi
                      shl    r7 r7 8
                      addi   r7 write1k:lo
                      cmpi   r6 zero
                      bflag  r7 GT
 done1kwrite:         push   r2
+                     pop    r0
 
                      ldi    r4 100
                      push   r4            ;divisor   
+                     pop    r1
 
                      ldi    r7 divide:hi
                      shl    r7 r7 8
                      addi   r7 divide:lo
                      call   r7
 
-                     pop    r6            ;quotient
-                     pop    r2            ;remainder
+
+                     push   r2
+                     pop    r6
+                     push   r3
+                     pop    r2
+
                      ldi    r7 write100:hi
                      shl    r7 r7 8
                      addi   r7 write100:lo
                      cmpi   r6 zero
                      bflag  r7 GT
 done100write:        push   r2
+                     pop    r0
 
                      ldi    r4 10
                      push   r4            ;divisor
+                     pop    r1
 
                      ldi    r7 divide:hi
                      shl    r7 r7 8
                      addi   r7 divide:lo
                      call   r7
-noop
-                     pop    r6            ;quotient
-                     pop    r2            ;remainder
+
+
+                     push   r2
+                     pop    r6
+                     push   r3
+                     pop    r2
+
                      ldi    r7 write10:hi
                      shl    r7 r7 8
                      addi   r7 write10:lo
@@ -575,7 +670,7 @@ noop
                      bflag  r7 GT
 done10write:         push   r2
                      pop    r6
-noop
+
                      ldi    r7 putR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 putR6BufferNext:lo
@@ -640,35 +735,18 @@ error:               ldi    r7 initBuffer:hi
                      ldi    r7 putR6BufferNext:hi
                      shl    r7 r7 8
                      addi   r7 putR6BufferNext:lo
-                     ldi    r6 chare
-                     
-                     push   r7
+                     ldi    r6 chare  
                      call   r7
-                     pop    r7
-                     ldi    r6 charr
-                    
-                     push   r7
+                     ldi    r6 charr 
                      call   r7
-                     pop    r7
-                     
-                     push   r7
+                     ldi    r6 charr 
                      call   r7
-                     pop    r7
                      ldi    r6 charo
-                     
-                     push   r7
                      call   r7
-                     pop    r7
                      ldi    r6 charr
-                     
-                     push   r7
                      call   r7
-                     pop    r7
                      ldi    r6 zero
-                     
-                     push   r7
                      call   r7
-                     pop    r7
 
                      ldi    r7 buffer:hi
                      shl    r7 r7 8
@@ -684,8 +762,17 @@ error:               ldi    r7 initBuffer:hi
 
                      ;checks for digit character in R6. Returns 0(false), 1(true) in R1
 returnIsDigitTrue:   ldi r1 one
-                     rtrn        
- isR6Digit:          ldi    r7 returnIsDigitTrue:hi
+                     mvsr   r5
+                     ldi    r4 r1idx
+                     stw    r1 r5 r4
+
+                     rtrn 
+
+ isR6Digit:          mvsr   r5
+                     ldi    r4 r6idx
+                     ldw    r6 r5 r4
+ 
+                     ldi    r7 returnIsDigitTrue:hi
                      shl    r7 r7 8
                      addi   r7 returnIsDigitTrue:lo
                      cmpi   r6 num0
@@ -709,26 +796,31 @@ returnIsDigitTrue:   ldi r1 one
                      cmpi   r6 num9
                      bflag  r7 EQ
                      ldi    r1 zero
+
+                     mvsr   r5
+                     ldi    r4 r1idx
+                     stw    r1 r5 r4
+
                      RTRN
 
 
 
 
 
-
+                    ;branch function multiply r3 * r6 
 callLMultiply:       ldi    r7 multiply:hi
                      shl    r7 r7 8
                      addi   r7 multiply:lo
-             
-                     push   r2     ;save answer
-                     push   r5     ;saving my r5 digit count
-                     push   r3
-                     push   r6
+          
                      call   r7
-                     pop    r1
-                     pop    r5     ;restore saved digit count
-                     pop    r2     ;restore answer
+                   
                      add    r2 r1 r2
+                     ldi    r7 opdLvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdLvalue:lo
+                     ldi    r0 zero
+                     stw    r2 r7 r0
+
                      ldi    r7 convertLloop:hi
                      shl    r7 r7 8
                      addi   r7 convertLloop:lo
@@ -737,17 +829,18 @@ callLMultiply:       ldi    r7 multiply:hi
 
 convertComplete:     rtrn
 
-                     ;new conversion code. digit to is R6
+
+                     ;call function. 
+                     ;new conversion code. digit to convert is R6
                      ;storing converted digit in R2
 convertOpdLstk:      ldi    r5 zero
                      ldi    r2 zero                    
 convertLloop:        ldi    r7 popR6OpdLeft:hi
                      shl    r7 r7 8
                      addi   r7 popR6OpdLeft:lo
-                     ;uses R0, R1, R3, R5, R6, R7
-                     push   r5
+
                      call   r7
-                     pop    r5
+                     ;on return popped digit is in R6
 
                      ldi    r7 convertComplete:hi
                      shl    r7 r7 8
@@ -756,8 +849,6 @@ convertLloop:        ldi    r7 popR6OpdLeft:hi
                      bflag  r7 EQ
 
                      addi   r5 one  
-
-                     
                      subi   r6 num0 
                      
                      ldi    r7 callLMultiply:hi
@@ -801,19 +892,18 @@ convertLloop:        ldi    r7 popR6OpdLeft:hi
 
 
 
-
+                    ;branch function. r3 * r6. 
 callRMultiply:       ldi    r7 multiply:hi
                      shl    r7 r7 8
                      addi   r7 multiply:lo
-                     push   r4     ;save answer
-                     push   r5     ;saving my r5 digit count
-                     push   r3
-                     push   r6
                      call   r7
-                     pop    r1
-                     pop    r5     ;restore saved digit count
-                     pop    r4     ;restore save answer
                      add    r4 r1 r4
+                     ldi    r7 opdRvalue:hi
+                     shl    r7 r7 8
+                     addi   r7 opdRvalue:lo
+                     ldi    r0 zero
+                     stw    r4 r7 r0
+
                      ldi    r7 convertRloop:hi
                      shl    r7 r7 8
                      addi   r7 convertRloop:lo
@@ -823,17 +913,16 @@ callRMultiply:       ldi    r7 multiply:hi
 
 
 
-                     ;new conversion code. digit to is R6
+                     ;new conversion code. digit to convert is R6
                      ;storing converted digit in R4
 convertOpdRstk:      ldi    r5 zero
                      ldi    r4 zero                    
 convertRloop:        ldi    r7 popR6OpdRight:hi
                      shl    r7 r7 8
                      addi   r7 popR6OpdRight:lo
-                     ;uses R0, R1, R3, R5, R6, R7
-                     push   r5
                      call   r7
-                     pop    r5
+                     ;on return R6=popped value
+                   
 
                      ldi    r7 convertComplete:hi
                      shl    r7 r7 8
@@ -886,7 +975,8 @@ convertRloop:        ldi    r7 popR6OpdRight:hi
                      rtrn
 
 
-                     ;uses r0, r1, r5, r6, r7
+                     ; call function. places next buffer Character in R6.
+                     ; does not remove character from the buffer
 seeR6BufferNext:     ldi    r7 buffer:hi
                      shl    r7 r7 8
                      addi   r7 bufferNext:lo
@@ -896,11 +986,16 @@ seeR6BufferNext:     ldi    r7 buffer:hi
                      shl    r5 r5 8
                      addi   r5 buffer:lo
                      ldw    r6 r5 r0
+
+                     mvsr   r0
+                     ldi    r1 r6idx
+                     stw    r6 r0 r1
                      rtrn
 
 
 
-                     ;uses r0, r1, r5, r6, r7
+                     ; call function. places next buffer Character in R6.
+                     ; does remove character from the buffer
 getR6BufferNext:     ldi    r7 buffer:hi
                      shl    r7 r7 8
                      addi   r7 bufferNext:lo
@@ -912,15 +1007,24 @@ getR6BufferNext:     ldi    r7 buffer:hi
                      ldw    r6 r5 r0
                      addi   r0 one
                      stw    r0 r7 r1
+
+                     mvsr   r0
+                     ldi    r1 r6idx
+                     stw    r6 r0 r1
                      rtrn
 
 
-                     ;uses r0, r1, r5, r6, r7
-putR6BufferNext:     ldi    r7 buffer:hi
+                     ; call function. Writes R6 character to the buffer
+putR6BufferNext:     mvsr   r0
+                     ldi    r1 r6idx
+                     ldw    r6 r0 r1
+
+                     ldi    r7 buffer:hi
                      shl    r7 r7 8
                      addi   r7 bufferNext:lo
                      ldi    r1 zero
                      ldw    r0 r7 r1      ;get buffer next index
+
                      ldi    r5 buffer:hi
                      shl    r5 r5 8
                      addi   r5 buffer:lo
@@ -932,10 +1036,23 @@ putR6BufferNext:     ldi    r7 buffer:hi
 
 
 
+callPushR6OpdLeft:   ldi    r7 pushR6OpdLeft:hi
+                     shl    r7 r7 8
+                     addi   r7 pushR6OpdLeft:lo
+                     call   r7
 
-                     ;uses R0, R1, R5, R7
-                     ;input digit in R6
-pushR6OpdLeft:       ldi    r7 opdLstk:Hi
+                     ldi    r7 readopdL:hi
+                     shl    r7 r7 8
+                     addi   r7 readopdL:lo
+                     jump   r7
+
+
+                     ;call function. pushes input R6 onto OpdLeft stack
+pushR6OpdLeft:       mvsr   r7
+                     ldi    r5 r6idx
+                     ldw    r6 r7 r5
+
+                     ldi    r7 opdLstk:Hi
                      shl    r7 r7 8
                      addi   r7 opdLtop:LO
                      ldi    r1 zero
@@ -949,9 +1066,12 @@ pushR6OpdLeft:       ldi    r7 opdLstk:Hi
                      rtrn
 
 emptyStack:          ldi    r6 zero
+                     mvsr   r7
+                     ldi    r5 r6idx
+                     stw    r6 r7 r5
                      rtrn
 
-                     ;uses R0, R1, R3, R5, R6, R7
+                     ;call function. pops opdLeft stack. places into R6 for return.
                      ;return digit in R6
 popR6OpdLeft:        ldi    r7 opdLstk:Hi
                      shl    r7 r7 8
@@ -969,11 +1089,19 @@ popR6OpdLeft:        ldi    r7 opdLstk:Hi
                      addi   r5 opdLstk:LO
                      ldw    r6 r5 r0
                      stw    r0 r7 r1
+
+                     mvsr   r7
+                     ldi    r5 r6idx
+                     stw    r6 r7 r5
+
                      rtrn                     
                      
-                     ;uses R0, R1, R5, R7
-                     ;input digit in R6
-pushR6OpdRight:      ldi    r7 opdRstk:Hi
+                     ;call function. pushes input R6 onto OpdRight stack
+pushR6OpdRight:      mvsr   r7
+                     ldi    r5 r6idx
+                     ldw    r6 r7 r5
+
+                     ldi    r7 opdRstk:Hi
                      shl    r7 r7 8
                      addi   r7 opdRtop:LO
                      ldi    r1 zero
@@ -986,7 +1114,7 @@ pushR6OpdRight:      ldi    r7 opdRstk:Hi
                      stw    r0 r7 r1
                      rtrn
 
-                     ;uses R0, R1, R3, R5, R6, R7
+                     ;call function. pops opdRight stack. places into R6 for return.
                      ;return digit in R6
 popR6OpdRight:       ldi    r7 opdRstk:Hi
                      shl    r7 r7 8
@@ -1004,14 +1132,23 @@ popR6OpdRight:       ldi    r7 opdRstk:Hi
                      addi   r5 opdRstk:LO
                      ldw    r6 r5 r0
                      stw    r0 r7 r1
+
+                     mvsr   r7
+                     ldi    r5 r6idx
+                     stw    r6 r7 r5
+
                      rtrn                     
 
 
 
 
 
+                    ;call function. saves the operator in R6
+putR6Operator:       mvsr   r0
+                     ldi    r1 r6idx
+                     ldw    r6 r0 r1
 
-putR6Operator:       ldi    r7 operator:Hi
+                     ldi    r7 operator:Hi
                      shl    r7 r7 8
                      addi   r7 operator:LO
                      ldi    r1 zero
@@ -1019,15 +1156,22 @@ putR6Operator:       ldi    r7 operator:Hi
                      rtrn
 
 
+                    ;call function. returns the stored operator into R6.
 getR6Operator:       ldi    r7 operator:Hi
                      shl    r7 r7 8
                      addi   r7 operator:LO
                      ldi    r1 zero
                      ldw    r6 r7 r1
+
+                     mvsr   r7
+                     ldi    r5 r6idx
+                     stw    r6 r7 r5
+
                      rtrn
              
 
 
+                    ;call function. no input. no return
 initopcLRstk:        ldi     r1 zero
                      ldi     r0 one
                      ldi     r7 opdLstk:HI  
@@ -1044,7 +1188,7 @@ initopcLRstk:        ldi     r1 zero
 
 
 
-
+                    ;call function. no input. no return
 initBuffer:          ldi    r0 zero
                      ldi    r7 buffer:hi
                      shl    r7 r7 8
@@ -1053,81 +1197,76 @@ initBuffer:          ldi    r0 zero
                      rtrn
 
 
-                    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                    ; multiply entry conditions uses r0 r4 r5 r6 r7
-                    ; caller should save registers if they contain active data
-                    ; call should:
-                    ;  - save any active registers on the stack
-                    ;  - push multiplicand 
-                    ;  - push multiplier
-                    ;  - return address on stack from call instruction
-                    ;
-                    ; The result will sit on top of the stack
-                    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    
-    returnZero:     ldi    r6 zero
-                    push   r6
-                    push   r0
-                    rtrn
-
-    multiply:       pop     r0  ; hold return addr
-    
-                    pop     r5  ; multiplier
-                    pop     r4  ; multiplicand 
-
-                    ldi    r7 returnZero:hi
-                    shl    r7 r7 8
-                    addi   r7 returnZero:lo
-                    cmpi   r5 zero
-                    bflag  r7 EQ   
-                    cmpi   r4 zero
-                    bflag  r7 EQ
-
-                    ldi     r6 ZERO
-    mulloop:        add     r6 r6 r4
-                    subi    r5 ONE
                     
-                    cmpi    r5 ZERO
-                    ldi     r7 mulloop:HI
-                    shl     r7 r7 8
-                    addi    r7 mulloop:LO
-                    bflag   r7 ne
-                    push    r6         ; answer
-                    push    r0         ; put back the return adr
+
+                    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                    ;
+                    ; recover r4 and r5 from the call stack
+                    ; r0 = multiplicand
+                    ; r1 = multiplier
+                    ;
+                    ; r2 = answermultiply
+                    ; write the answer r2 back to r2 position on the call stack
+                    ;  
+                    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    multiply:       mvsr    r7
+                    ldi     r6 r3idx
+                    ldw     r0 r7 r6
+                    ldi     r6 r6idx
+                    ldw     r1 r7 r6
+
+                  
+                    
+                    ldi     r2 zero
+    mulloop:        add     r2 r2 r0
+                    subi    r1 ONE
+                  
+                    cmpi    r1 ZERO
+                    ldi     r5 mulloop:HI
+                    shl     r5 r5 8
+                    addi    r5 mulloop:LO
+                    bflag   r5 ne
+
+                    mvsr    r7
+                    ldi     r6 r1idx
+                    stw     r2 r7 r6
                     
                     RTRN
 
 
 
+
+
+
+
+
+
+
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                    ; divide entry conditions uses r0 r3 r4 r5 r6 r7
-                    ; caller should save registers if they contain active data
-                    ; call should:
-                    ;  - save any active registers on the stack
-                    ;  - push dividend 
-                    ;  - push divisor
-                    ;  - return address on stack from call instruction
+                    ; stack r0 = dividend
+                    ; stack r1 = divisor
                     ;
-                    ; The result will sit on top of the stack: quotient, remainder
+                    ; r4 = dividend
+                    ; r5 = divisor
+                    ;
+                    ; r2 = quotient
+                    ; r3 = remainder
+                    ;
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    divide:         pop     r0  ; hold return addr
-                    pop     r5  ; divisor
-                    pop     r4  ; dividend
-                   
-                    ldi     r7 error:hi
-                    shl     r7 r7 8
-                    addi    r7 error:lo
-                    cmpi    r5 zero
-                    bflag   r7 EQ
+    divide:         mvsr    r0
+                    ldi     r1 r0idx
+                    ldw     r4 r0 r1        ;r4 = dividend
+                    ldi     r1 r1idx
+                    ldw     r5 r0 r1        ;r5 = divisor
                     
                     ldi     r3 ZERO
                     add     r3 r3 r4  ; copy dividend to r3
                     ldi     r6 ZERO
     divloop:        sub     r4 r4 r5
                     addi    r6 ONE
-                   
+                 
                     cmp     r3 r4
                     ldi     r7 divloop:HI
                     shl     r7 r7 8
@@ -1135,9 +1274,13 @@ initBuffer:          ldi    r0 zero
                     bflag   r7 gt
                     subi    r6 ONE
                     add     r4 r4 r5
-                    push    r4         ; remainder
-                    push    r6         ; quotient
-                    push    r0         ; put back the return adr
+
+                    ldi     r1 r2idx
+                    stw     r6 r0 r1
+                    ldi     r1 r3idx
+                    stw     r4 r0 r1
+                   
                     
                     RTRN
-                    
+
+

@@ -24,7 +24,7 @@ func (core *Config) printStack() {
 	var j uint16 = uint16(start)
 	var k int = 0
 
-	for i := start; i < end; i++ {
+	for i := start; i <= end; i++ {
 		fmt.Print(cursor.MoveTo(ioStackMemTopRow+k, ioMemCol))
 		fmt.Printf("%5d", core.CoreMemory[j])
 		j++

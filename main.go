@@ -37,6 +37,7 @@ type Config struct {
 	IOmem             map[int]string
 	IOrwCol           int
 	DebugMode         bool
+	DebugMap          map[int]string
 }
 
 type Regval int
@@ -89,6 +90,7 @@ func main() {
 	core.DebugMode = false
 
 	core.IOmem = make(map[int]string)
+	core.DebugMap = make(map[int]string)
 
 	for idx := 0; idx < 16; idx++ {
 		core.IOmem[idx] = ""

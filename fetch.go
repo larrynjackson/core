@@ -13,6 +13,10 @@ func (core *Config) fetchInstruction(count int) int {
 	switch count {
 	case 1:
 
+		if core.DebugMode {
+			core.printDoc(int(core.CoreMemPoint))
+		}
+
 		core.cntlRegHandler(int(IA), "closeout")
 		core.cntlRegHandler(int(IA), "outdirection")
 		core.RegValues[IR] = core.CoreMemory[core.CoreMemPoint]

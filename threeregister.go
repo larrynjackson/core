@@ -185,6 +185,11 @@ func (core *Config) threeRegister(count int) int {
 		} else if core.Opcode == "STW" {
 			core.cntlRegHandler(int(DA), "openout")
 			core.cntlRegHandler(int(DR), "openout")
+
+			if core.DebugMode {
+				core.printStack()
+			}
+
 			time.Sleep(core.SleepTime * time.Millisecond)
 			core.OperationClass = "fetch"
 			core.clockTick(count)

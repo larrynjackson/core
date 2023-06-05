@@ -1,4 +1,4 @@
-
+;old quicksort. not working with new code. working on it.
 
 ZERO:      DBYTE   0         
 ONE:       DBYTE   1

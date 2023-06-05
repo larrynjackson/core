@@ -31,20 +31,43 @@
 
 
 
-    ZERO:            DBYTE       0
-    ONE:             DBYTE       1
+    ZERO:           DBYTE   0         
+    ONE:            DBYTE   1
+    TWO:            DBYTE   2
+    THREE:          DBYTE   3
+    FOUR:           DBYTE   4
+    FIVE:           DBYTE   5
+    SIX:            DBYTE   6
+    SEVEN:          DBYTE   7
+    EIGHT:          DBYTE   8
+
+    R0IDX:          DBYTE   2
+    R1IDX:          DBYTE   3
+    R2IDX:          DBYTE   4
+    R3IDX:          DBYTE   5
+    R4IDX:          DBYTE   6
+    R5IDX:          DBYTE   7
+    R6IDX:          DBYTE   8
+    R7IDX:          DBYTE   9
+
+
+    ;dividend:hi:     DBYTE       1
+    ;dividend:lo:     DBYTE       129
+    ;divisor:         DBYTE       8
+
     dividend:hi:     DBYTE       57
     dividend:lo:     DBYTE       145
     divisor:         DBYTE       247
+
 
                  
                     ; division subroutine
 
    
-                    ldi     r7 setstack:HI
-                    shl     r7 r7 8
-                    addi    r7 setstack:LO
-                    call    r7
+start:              ldi     r0 ZERO
+                    not     r0 r0
+                    ldsr    r0
+        
         
 
                 
@@ -55,62 +78,45 @@
                     ; push to the stack, dividend and divisor
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-                    ldi     r4 dividend:hi
-                    shl     r4 r4 8
-                    addi    r4 dividend:lo
-                    ldi     r5 divisor
-                    push    r4
-                    push    r5
-                    ;noop
+                    ldi     r0 dividend:hi
+                    shl     r0 r0 8
+                    addi    r0 dividend:lo
+                    ldi     r1 divisor
 
                     ldi     r7 divide:HI
                     shl     r7 r7 8
                     addi    r7 divide:LO
-                    noop
+           
                     call    r7
-
-                    pop     r0  ;quotient
-                    pop     r1  ;remainder
-                   
+          
                     
                     HALT
 
 
-                    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                    ; set the current stack top to 0xFFFF (65535)
-                    ; destroys r0 contents
-                    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-    setstack:       ldi     r0 ZERO
-                    not     r0 r0
-                    ldsr    r0
-                    rtrn
-
-
-
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                    ; divide entry conditions uses r0 r3 r4 r5 r6 r7
-                    ; caller should save registers if they contain active data
-                    ; call should:
-                    ;  - save any active registers on the stack
-                    ;  - push dividend 
-                    ;  - push divisor
-                    ;  - return address on stack from call instruction
+                    ; stack r0 = dividend
+                    ; stack r1 = divisor
                     ;
-                    ; The result will sit on top of the stack: quotient, remainder
+                    ; r4 = dividend
+                    ; r5 = divisor
+                    ;
+                    ; r2 = quotient
+                    ; r3 = remainder
+                    ;
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    divide:         pop     r0  ; hold return addr
-                    pop     r5  ; divisor
-                    pop     r4  ; dividend
-                    noop
+    divide:         mvsr    r0
+                    ldi     r1 r0idx
+                    ldw     r4 r0 r1        ;r4 = dividend
+                    ldi     r1 r1idx
+                    ldw     r5 r0 r1        ;r5 = divisor
                     
                     ldi     r3 ZERO
                     add     r3 r3 r4  ; copy dividend to r3
                     ldi     r6 ZERO
     divloop:        sub     r4 r4 r5
                     addi    r6 ONE
-                    noop
+                 
                     cmp     r3 r4
                     ldi     r7 divloop:HI
                     shl     r7 r7 8
@@ -118,9 +124,12 @@
                     bflag   r7 gt
                     subi    r6 ONE
                     add     r4 r4 r5
-                    push    r4         ; remainder
-                    push    r6         ; quotient
-                    push    r0         ; put back the return adr
+
+                    ldi     r1 r2idx
+                    stw     r6 r0 r1
+                    ldi     r1 r3idx
+                    stw     r4 r0 r1
+                   
                     
                     RTRN
 

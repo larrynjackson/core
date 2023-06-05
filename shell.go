@@ -155,9 +155,9 @@ func (core *Config) shell() {
 				core.DebugMode = true
 				core.runAll(input)
 			} else if input == "A" {
-				core.ASM.Assemble(homeColumn, core.CoreMemory[:], "assemble")
+				core.ASM.Assemble(homeColumn, core.CoreMemory[:], "assemble", core.DebugMap)
 			} else if input == "L" {
-				core.ASM.Assemble(homeColumn, core.CoreMemory[:], "loadCore")
+				core.ASM.Assemble(homeColumn, core.CoreMemory[:], "loadCore", core.DebugMap)
 			}
 		}
 
