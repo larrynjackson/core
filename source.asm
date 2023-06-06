@@ -1,4 +1,4 @@
-;new quicksort but not working yet. work in progress
+;new quicksort
 
 ZERO:           DBYTE   0         
     ONE:            DBYTE   1
@@ -56,15 +56,12 @@ main:               ldi     r7 qs:hi
 
                     call    r7                  ;call qs
                    
-
 endMain:            ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
                     out     r7
         
                     halt
-
-
 
 qs:                 MVSR    r0                
                     ldi     r1 r5idx
@@ -81,46 +78,48 @@ qs:                 MVSR    r0
                     shl     r7 r7 8
                     addi    r7 endIf:lo
                     bflag   r7 EQ
-
                     subi    r5 one
 
                     cmp     r5 r4               ; if r > l do if
              
-                    ldi     r7 doIf:hi          ;if l > r or l == r jump doIf
+                    ldi     r7 doIf:hi          
                     shl     r7 r7 8
                     addi    r7 doIf:lo
                     bflag   r7 GT
 
 endIf:              rtrn
 
+
+
 doIf:               ldi     r7 partition:hi
                     shl     r7 r7 8
                     addi    r7 partition:lo
-                    call    r7
-
-
-                    
+                    call    r7               
                                                 ;r2 (i) = l
                     subi    r2 one              ;r2 (i) = L-1
                 
                     push    r2  
                     pop     r5                  ;r5 (j) = R
-                    
+                    addi    r2 one
 
                     ldi     r7 qs:hi
                     shl     r7 r7 8
                     addi    r7 qs:lo   
+
                     call    r7
+
+                    mvsr    r0
+                    ldi     r1 R5IDX
+                    ldw     r5 r0 r1
 
                     push    r2
                     pop     r4
                     addi    r4 one
-      
-
-                   
+                      
                     ldi     r7 qs:hi
                     shl     r7 r7 8
                     addi    r7 qs:lo
+
                     call    r7
 
                     rtrn
@@ -156,7 +155,7 @@ doForOne:           addi    r2 one                  ;i++
                     addi    r7 doForTwo:lo
                     bflag   r7 GT                   ;if r6 a[i] >= v || i == R
                     bflag   r7 EQ
-                    cmp     r2 r5
+                    cmp     r2 r5                   ; i == R
                     bflag   r7 EQ
                     ldi     r7 doForOne:hi
                     shl     r7 r7 8
@@ -165,6 +164,7 @@ doForOne:           addi    r2 one                  ;i++
 
 
 doForTwo:           subi    r3 one                  ;j--
+
                     ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
@@ -208,7 +208,7 @@ breakForJ--:        ldi     r7 buffer:hi
 endForLoops:        ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
-                    ldw     r6 r7 r2
+                    ldw     r6 r7 r2                ;r6 = a[i]  r1 = t
                     stw     r6 r7 r3
                     ldw     r6 r7 r5
                     stw     r6 r7 r2

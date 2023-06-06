@@ -1,10 +1,23 @@
-;old quicksort. not working with new code. working on it.
+;new quicksort
 
-ZERO:      DBYTE   0         
-ONE:       DBYTE   1
-TWO:       DBYTE   2
-THREE:     DBYTE   3
-FOUR:      DBYTE   4
+ZERO:           DBYTE   0         
+    ONE:            DBYTE   1
+    TWO:            DBYTE   2
+    THREE:          DBYTE   3
+    FOUR:           DBYTE   4
+    FIVE:           DBYTE   5
+    SIX:            DBYTE   6
+    SEVEN:          DBYTE   7
+    EIGHT:          DBYTE   8
+
+    R0IDX:          DBYTE   2
+    R1IDX:          DBYTE   3
+    R2IDX:          DBYTE   4
+    R3IDX:          DBYTE   5
+    R4IDX:          DBYTE   6
+    R5IDX:          DBYTE   7
+    R6IDX:          DBYTE   8
+    R7IDX:          DBYTE   9
 
 
 
@@ -39,20 +52,10 @@ bufferLength:       ldw     r2 r7 r5
 main:               ldi     r7 qs:hi
                     shl     r7 r7 8
                     addi    r7 qs:lo
-                    ldi     r4 zero             ;r4 = 0
+                    ldi     r4 zero             ;r4 = 0 r5 = R
 
-                    ;create a consistant stack frame where 
-                    ;SR + 1 is the return address from call
-                    ;SR + 2 is R
-                    ;SR + 3 is L
-                    ;SR + 4 is I 
-                    
-                    push    r4                  ;push i=0 for consistant stack   
-                    push    r4                  ;push L on the stack
-                    push    r5                  ;push R on the stack
                     call    r7                  ;call qs
                    
-
 endMain:            ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
@@ -60,12 +63,10 @@ endMain:            ldi     r7 buffer:hi
         
                     halt
 
-
-
 qs:                 MVSR    r0                
-                    ldi     r1 two
+                    ldi     r1 r5idx
                     ldw     r5 r0 r1            ;load R5 with R
-                    ldi     r1 three
+                    ldi     r1 r4idx
                     ldw     r4 r0 r1            ;load r4 with L  
 
                     ;check for a negative rollover to a large positive
@@ -77,82 +78,64 @@ qs:                 MVSR    r0
                     shl     r7 r7 8
                     addi    r7 endIf:lo
                     bflag   r7 EQ
-
                     subi    r5 one
 
                     cmp     r5 r4               ; if r > l do if
              
-                    ldi     r7 doIf:hi          ;if l > r or l == r jump doIf
+                    ldi     r7 doIf:hi          
                     shl     r7 r7 8
                     addi    r7 doIf:lo
                     bflag   r7 GT
 
-endIf:              pop     r6
-                    pop     r0
-                    pop     r0
-                    pop     r0
-                    push    r6  
-                     
-                    rtrn
+endIf:              rtrn
+
+
 
 doIf:               ldi     r7 partition:hi
                     shl     r7 r7 8
                     addi    r7 partition:lo
-                    jump    r7
-
-
+                    call    r7               
+                                                ;r2 (i) = l
+                    subi    r2 one              ;r2 (i) = L-1
                 
-retPartition:       MVSR    r0
-                    ldi     r1 four
-                    ldw     r2 r0 r1            ;r2 = i
-                    subi    r2 one              ;r2 = i-1
-                    ldi     r1 three
-                    stw     r4 r0 r1            ;r4 = L
-
-                    push    r2                  ;push dummy i value
-                    push    r4                  ;push r4 L
-                    push    r2                  ;push i-1 R
+                    push    r2  
+                    pop     r5                  ;r5 (j) = R
+                    addi    r2 one
 
                     ldi     r7 qs:hi
                     shl     r7 r7 8
                     addi    r7 qs:lo   
-                    call    r7
-      
-                    MVSR    r0
-                    ldi     r1 four
-                    ldw     r2 r0 r1            ;r2 = i
-                    push    r2                  ;put back i on the stack
-                    addi    r2 one
-                    push    r2                  ;push L (i+1)
-                    ldi     r1 two
-                    ldw     r5 r0 r1
-                    push    r5                  ; push R
 
-                   
+                    call    r7
+
+                    mvsr    r0
+                    ldi     r1 R5IDX
+                    ldw     r5 r0 r1
+
+                    push    r2
+                    pop     r4
+                    addi    r4 one
+                      
                     ldi     r7 qs:hi
                     shl     r7 r7 8
                     addi    r7 qs:lo
+
                     call    r7
 
-                    pop     r6
-                    pop     r0
-                    pop     r0
-                    pop     r0
-                    push    r6
                     rtrn
 
 
                     
 partition:          MVSR    r0
-                    ldi     r1 two
+                    ldi     r1 r5idx
                     ldw     r5 r0 r1                ;r5 = R
-                    ldi     r1 three
+                    ldi     r1 r4idx
                     ldw     r4 r0 r1                ;r4 = L
 
                     ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
-                    ldw     r0 r7 r5                ;v = a[r]
+                    ldw     r0 r7 r5                ;R0 : v = a[r]
                     push    r4                      ;L
                     pop     r2                      ;i = L
                     subi    r2 one                  ;i = l-1
@@ -172,7 +155,7 @@ doForOne:           addi    r2 one                  ;i++
                     addi    r7 doForTwo:lo
                     bflag   r7 GT                   ;if r6 a[i] >= v || i == R
                     bflag   r7 EQ
-                    cmp     r2 r5
+                    cmp     r2 r5                   ; i == R
                     bflag   r7 EQ
                     ldi     r7 doForOne:hi
                     shl     r7 r7 8
@@ -181,6 +164,7 @@ doForOne:           addi    r2 one                  ;i++
 
 
 doForTwo:           subi    r3 one                  ;j--
+
                     ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
@@ -224,7 +208,7 @@ breakForJ--:        ldi     r7 buffer:hi
 endForLoops:        ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
-                    ldw     r6 r7 r2
+                    ldw     r6 r7 r2                ;r6 = a[i]  r1 = t
                     stw     r6 r7 r3
                     ldw     r6 r7 r5
                     stw     r6 r7 r2
@@ -232,14 +216,10 @@ endForLoops:        ldi     r7 buffer:hi
                     ;i is in R2
 
                     MVSR    r0
-                    ldi     r1 four
+                    ldi     r1 r2idx
                     stw     r2 r0 r1                ;save i on in stack frame
 
-                    ldi     r7 retPartition:hi
-                    shl     r7 r7 8
-                    addi    r7 retPartition:lo
- 
-                    jump    r7
+                    rtrn
                    
 
 
