@@ -1,289 +1,198 @@
-;new quicksort
+;some stuff that's not complete yet. work in progress
 
 ZERO:           DBYTE   0         
-    ONE:            DBYTE   1
-    TWO:            DBYTE   2
-    THREE:          DBYTE   3
-    FOUR:           DBYTE   4
-    FIVE:           DBYTE   5
-    SIX:            DBYTE   6
-    SEVEN:          DBYTE   7
-    EIGHT:          DBYTE   8
+ONE:            DBYTE   1
+TWO:            DBYTE   2
+THREE:          DBYTE   3
+FOUR:           DBYTE   4
+FIVE:           DBYTE   5
+SIX:            DBYTE   6
+SEVEN:          DBYTE   7
+EIGHT:          DBYTE   8
 
-    R0IDX:          DBYTE   2
-    R1IDX:          DBYTE   3
-    R2IDX:          DBYTE   4
-    R3IDX:          DBYTE   5
-    R4IDX:          DBYTE   6
-    R5IDX:          DBYTE   7
-    R6IDX:          DBYTE   8
-    R7IDX:          DBYTE   9
+R0IDX:          DBYTE   2
+R1IDX:          DBYTE   3
+R2IDX:          DBYTE   4
+R3IDX:          DBYTE   5
+R4IDX:          DBYTE   6
+R5IDX:          DBYTE   7
+R6IDX:          DBYTE   8
+R7IDX:          DBYTE   9
+
+stk-a:pt:       dbyte   239
+stk-a:lo:       dbyte   240
+stk-a:hi:       dbyte   216
+
+stkbuf:lo:      dbyte   255
+stkbuf:hi:      dbyte   77
 
 
 
-buffer:lo:           dbyte  255
-buffer:hi:           dbyte  66
+buffer:lo:      dbyte  255
+buffer:hi:      dbyte  66
+
 
 start:              ldi     r0 ZERO
                     not     r0 r0
                     ldsr    r0
-                     
+
+                    ldi     r7 stk-a-init:hi
+                    shl     r7 r7 8
+                    addi    r7 stk-a-init:lo
+                    call    r7
+
+
                     ldi     r0 buffer:hi
                     shl     r0 r0 8
                     addi    r0 buffer:lo       
                     in      r0
+            
 
-                    ldi     r5 zero
+                    ldi     r6 zero
                     ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
 
-bufferLength:       ldw     r2 r7 r5
-                    addi    r5 one
-                    cmpi    r2 zero
-                    ldi     r6 bufferLength:hi
-                    shl     r6 r6 8
-                    addi    r6 bufferLength:lo    
-                    bflag   r6 GT               ;r5 = len(buffer)
-                    subi    R5 ONE              ;r5 is now size
-                    subi    r5 one              ;r5 is now right (size-1)
-                
+pushBufNext:        ldw     r0 r7 r6
+                    ldi     r5 pushDone:hi
+                    shl     r5 r5 8
+                    addi    r5 pushDone:lo
+                    cmpi    r0 zero
+                    bflag   r5 eq
+                    
+                    ldi     r3 stk-a-push:hi
+                    shl     r3 r3 8
+                    addi    r3 stk-a-push:lo
+                    call    r3
 
-main:               ldi     r7 qs:hi
-                    shl     r7 r7 8
-                    addi    r7 qs:lo
-                    ldi     r4 zero             ;r4 = 0 r5 = R
+                    addi    r6 one
+                    ldi     r5 pushBufNext:hi
+                    shl     r5 r5 8
+                    addi    r5 pushBufNext:lo
+                    jump    r5
 
-                    call    r7                  ;call qs
-                   
-endMain:            ldi     r7 buffer:hi
+pushDone:           ldi     r6 zero
+                    ldi     r7 buffer:hi
                     shl     r7 r7 8
                     addi    r7 buffer:lo
-                    out     r7
-        
-                    halt
-
-qs:                 MVSR    r0                
-                    ldi     r1 r5idx
-                    ldw     r5 r0 r1            ;load R5 with R
-                    ldi     r1 r4idx
-                    ldw     r4 r0 r1            ;load r4 with L  
-
-                    ;check for a negative rollover to a large positive
-                    ;number. ex: R should be -1 but rolls into 65535
-                    ;if caught jump to endif otherwise set R to zero
-                    addi    r5 one
-                    cmpi    r5 zero
-                    ldi     r7 endIf:hi
-                    shl     r7 r7 8
-                    addi    r7 endIf:lo
-                    bflag   r7 EQ
-                    subi    r5 one
-
-                    cmp     r5 r4               ; if r > l do if
-             
-                    ldi     r7 doIf:hi          
-                    shl     r7 r7 8
-                    addi    r7 doIf:lo
-                    bflag   r7 GT
-
-endIf:              rtrn
 
 
+popStackNext:       ldi     r5 stk-a-isempty:hi   
+                    shl     r5 r5 8
+                    addi    r5 stk-a-isempty:lo
+                    call    r5
+                    cmpi    r0 one
 
-doIf:               ldi     r7 partition:hi
-                    shl     r7 r7 8
-                    addi    r7 partition:lo
-                    call    r7               
-                                                ;r2 (i) = l
-                    subi    r2 one              ;r2 (i) = L-1
-                
-                    push    r2  
-                    pop     r5                  ;r5 (j) = R
-                    addi    r2 one
+                    ldi     r5 endMain:hi
+                    shl     r5 r5 8
+                    addi    r5 endMain:lo
+                    bflag   r5 eq
 
-                    ldi     r7 qs:hi
-                    shl     r7 r7 8
-                    addi    r7 qs:lo   
+                    ldi     r5 stk-a-pop:hi
+                    shl     r5 r5 8
+                    addi    r5 stk-a-pop:lo
+                    call    r5
 
-                    call    r7
+                    stw     r0 r7 r6
+                    addi    r6 one
+                    ldi     r3 ZERO
+                    stw     r3 r7 r6
 
-                    mvsr    r0
-                    ldi     r1 R5IDX
-                    ldw     r5 r0 r1
+                    ldi     r5 popStackNext:hi
+                    shl     r5 r5 8
+                    addi    r5 popStackNext:lo
+                    jump    r5           
+                 
+                   
 
-                    push    r2
-                    pop     r4
-                    addi    r4 one
-                      
-                    ldi     r7 qs:hi
-                    shl     r7 r7 8
-                    addi    r7 qs:lo
 
-                    call    r7
+endMain:            ldi     r0 buffer:hi
+                    shl     r0 r0 8
+                    addi    r0 buffer:lo
+                    out     r0
 
+ endProgram:        halt
+
+
+
+
+stk-a-init:         ldi     r0 stk-a:hi
+                    shl     r0 r0 8
+                    addi    r0 stk-a:pt
+                    ldi     r1 zero
+                    stw     r1 r0 r1
                     rtrn
 
 
-                    
-partition:          MVSR    r0
-                    ldi     r1 r5idx
-                    ldw     r5 r0 r1                ;r5 = R
-                    ldi     r1 r4idx
-                    ldw     r4 r0 r1                ;r4 = L
-
-                    ldi     r7 buffer:hi
+                    ;pushes the contents of R0 onto the stack.
+stk-a-push:         MVSR    r7                
+                    ldi     r6 R0IDX
+                    ldw     r0 r7 r6            ;R0 = value to push
+          
+                    ldi     r7 stk-a:hi
                     shl     r7 r7 8
-                    addi    r7 buffer:lo
-                    ldw     r0 r7 r5                ;R0 : v = a[r]
-                    push    r4                      ;L
-                    pop     r2                      ;i = L
-                    subi    r2 one                  ;i = l-1
-                    push    r5                      ;r
-                    pop     r3                      ;j = R
+                    addi    r7 stk-a:pt
+                    ldi     r6 zero
+                    ldw     r1 r7 r6            ;get stack-a top to R1
+                    addi    r1 one
+                    stw     r1 r7 r6            ;increment stack-a top
 
-doForOne:           addi    r2 one                  ;i++
-
-                    ldi     r7 buffer:hi
+                    ldi     r7 stk-a:hi
                     shl     r7 r7 8
-                    addi    r7 buffer:lo
-                    ldw     r6 r7 r2                ;a[i] into r6
-                    cmp     r6 r0                   ;if r6 a[i] >= v
-
-                    ldi     r7 doForTwo:hi
-                    shl     r7 r7 8
-                    addi    r7 doForTwo:lo
-                    bflag   r7 GT                   ;if r6 a[i] >= v || i == R
-                    bflag   r7 EQ
-                    cmp     r2 r5                   ; i == R
-                    bflag   r7 EQ
-                    ldi     r7 doForOne:hi
-                    shl     r7 r7 8
-                    addi    r7 doForOne:lo
-                    jump    r7
+                    addi    r7 stk-a:lo
+                    stw     r0 r7 r1            ;save r0 to stack-a[R1]
+                    rtrn
 
 
-doForTwo:           subi    r3 one                  ;j--
+                    ;returns the top of the stack value in R0
+stk-a-pop:          ldi     r7 stk-a:hi
+                    shl     r7 r7 8
+                    addi    r7 stk-a:pt
+                    ldi     r6 zero
+                    ldw     r1 r7 r6             ;get stack-a top to R1
 
-                    ldi     r7 buffer:hi
+                    ldi     r7 stk-a:hi
                     shl     r7 r7 8
-                    addi    r7 buffer:lo
-                    ldw     r6 r7 r3                ;R6 = a[j]
-                    cmp     r6 r0                   ;if a[j] <= v || j == 0
-                    ldi     r7 breakForJ--:hi
-                    shl     r7 r7 8
-                    addi    r7 breakForJ--:lo
-                    bflag   r7 EQ
-                    bflag   r7 LT
-                    cmpi    r3 zero
-                    bflag   r7 EQ
-                    ldi     r7 doForTwo:hi
-                    shl     r7 r7 8
-                    addi    r7 doForTwo:lo
-                    jump    r7
+                    addi    r7 stk-a:lo
+                    ldw     r0 r7 r1             ;R0 = stack-a[R1]
 
-                    ; end for two
-breakForJ--:        ldi     r7 buffer:hi
+                    ldi     r7 stk-a:hi
                     shl     r7 r7 8
-                    addi    r7 buffer:lo
-                    ldw     r1 r7 r2                ;t = a[i]
-                    ldw     r6 r7 r3                ;r6 = a[j]
-                    stw     r6 r7 r2                ;a[i] = a[j]
-                    stw     r1 r7 r3                ;a[j] = t  
+                    addi    r7 stk-a:pt
+                    ldi     r6 zero
+                    subi    r1 one               ;decrement stack-a top
+                    stw     r1 r7 r6             ;save stack-a top
 
-                    ldi     r7 endForLoops:hi
-                    shl     r7 r7 8
-                    addi    r7 endForLoops:lo
-                    cmp     r3 r2                   ;j <= i  break
-                    bflag   r7 EQ
-                    bflag   r7 LT
-                    ldi     r7 doForOne:hi
-                    shl     r7 r7 8
-                    addi    r7 doForOne:lo
-                    jump    r7
+                    MVSR    r7
+                    ldi     r6 r0idx
+                    stw     r0 r7 r6             ;save R0 in R0 call stack position
+
+                    rtrn
+
 
  
 
-
-endForLoops:        ldi     r7 buffer:hi
+                    ;returns value in R0, R0=0 false, R0=1 true
+stk-a-isempty:      ldi     r7 stk-a:hi
                     shl     r7 r7 8
-                    addi    r7 buffer:lo
-                    ldw     r6 r7 r2                ;r6 = a[i]  r1 = t
-                    stw     r6 r7 r3
-                    ldw     r6 r7 r5
-                    stw     r6 r7 r2
-                    stw     r1 r7 r5
-                    ;i is in R2
+                    addi    r7 stk-a:pt
+                    ldi     r6 zero
+                    ldw     r1 r7 r6             ;get stack-a top to R1
 
-                    MVSR    r0
-                    ldi     r1 r2idx
-                    stw     r2 r0 r1                ;save i on in stack frame
+                    ldi     r0 one               ;R0=1 isEmpty, R0=0 not isEmpty
+                    cmpi    r1 zero
+                    ldi     r7 return:hi
+                    shl     r7 r7 8
+                    addi    r7 return:lo
+                    bflag   r7 eq                   ;is empty, r0 = 1  
+                    ldi     r0 zero              ;set R0 = 0, not is empty
+
+return:             MVSR    r7
+                    ldi     r6 R0IDX
+                    stw     r0 r7 r6
 
                     rtrn
-                   
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; golang quick sort algorithm used to model this assembly PROGRAM
-;
-;
-;   package main
-;
-;   var a = []int{'A', 'E', 'D', 'B', 'C'}
-;
-;   func main() {
-;   	qs(0, len(a)-1)
-;   	fmt.Println(a)
-;   }
-;
-;   func qs(l int, r int) {
-;   	var i int
-;   	fmt.Printf("QS %d %d\n", l, r)
-;   	if r > l {
-;   		i = partition(l, r)
-;   		qs(l, i-1)
-;   		qs(i+1, r)
-;   	}
-;   }
-;
-;   func partition(l int, r int) int {
-;
-;   	var v int
-;   	var t int
-;   	var i int
-;   	var j int
-;
-;   	v = a[r]
-;   	i = l - 1
-;   	j = r
-;   	for {
-;   		for {
-;   			i++
-;   			if a[i] >= v || i == r {
-;   				break
-;   			}
-;   		}
-;   		for {
-;   			j--
-;   			if a[j] <= v || j == 0 {
-;   				break
-;   			}
-;   		}
-;   		t = a[i]
-;   		a[i] = a[j]
-;   		a[j] = t
-;   		if j <= i {
-;   			break
-;   		}
-;   	}
-;   	a[j] = a[i]
-;   	a[i] = a[r]
-;   	a[r] = t
-;   	return i
-;   }
-;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          
+                    
 
 

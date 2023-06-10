@@ -40,6 +40,12 @@ main:               ldi     r0 5
                     ldi     r5 30
                     ldi     r6 35
                     ldi     r7 40
+
+                    ldi     r7 testOne:hi
+                    shl     r7 r7 8
+                    addi    r7 testOne:lo
+
+                    call    r7
                     
                     ldi     r7 endMain:hi
                     shl     r7 r7 8
@@ -47,7 +53,7 @@ main:               ldi     r0 5
 
 
 
-                    call    r7                  ;call qs
+                    call    r7                  ;endMain
                    
                     halt
 
@@ -93,6 +99,15 @@ endMain:            MVSR    r7
                     ldw     r1 r7 r6
                     addi    r1 100
                     stw     r1 r7 r6
+
+                    rtrn
+
+
+testOne:            ldi     r0 22
+                    ldi     r1 33
+                    ldi     r2 44
+                    ldi     r3 55
+                    ldi     r4 66
 
                     rtrn
 
