@@ -1,5 +1,9 @@
 
 
+;simple echo program. type * to quit.
+
+
+
 ZERO:      DBYTE   0         ;constants ZERO and ONE
 ONE:       DBYTE   1
 
@@ -40,6 +44,12 @@ readCmdLine:        ldi     r0 buffer:hi
                     addi    r7 readCmdLine:lo
                     jump    r7
 
- endProgram:        halt
+ endProgram:        ldi     r0 exitEcho:hi
+                    shl     r0 r0 8
+                    addi    r0 exitEcho:lo
+                    out     r0
+                    halt
+
+ exitEcho:          dstring oh what a wonderful day
 
 

@@ -198,7 +198,16 @@ readInput:           ldi    r7 initopcLRstk:HI
                      addi   r7 readInput:lo
                      jump   r7
 
- endProgram:         halt
+
+ endProgram:         ldi     r0 exitCalc:hi
+                     shl     r0 r0 8
+                     addi    r0 exitCalc:lo
+                     out     r0
+
+                     halt
+
+
+
 
 
 callInputError:      ldi    r7 error:hi
@@ -1282,5 +1291,8 @@ initBuffer:          ldi    r0 zero
                    
                     
                     RTRN
+
+exitCalc:          dstring oh what a wonderful day
+
 
 

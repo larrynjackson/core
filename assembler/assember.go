@@ -11,25 +11,27 @@ import (
 )
 
 type Assembler struct {
-	asmFileName   string
-	docFileName   string
-	hexFileName   string
-	docFile       *os.File
-	hexFile       *os.File
-	labelMap      map[string]uint16
-	opCodeMap     map[string]uint16
-	byteMap       map[string]uint16
-	regOneMap     map[string]uint16
-	regTwoMap     map[string]uint16
-	regThreeMap   map[string]uint16
-	shiftMap      map[string]uint16
-	flagMap       map[string]uint16
-	opcClassMap   map[string]string
-	DebugMap      map[int]string
-	adrMemPointer uint16
-	CoreMemory    []uint16
-	lineCount     int
-	homeColunm    int
+	asmFileName    string
+	docFileName    string
+	hexFileName    string
+	docFile        *os.File
+	hexFile        *os.File
+	labelMap       map[string]uint16
+	opCodeMap      map[string]uint16
+	byteMap        map[string]uint16
+	regOneMap      map[string]uint16
+	regTwoMap      map[string]uint16
+	regThreeMap    map[string]uint16
+	shiftMap       map[string]uint16
+	flagMap        map[string]uint16
+	opcClassMap    map[string]string
+	DebugMap       map[int]string
+	strConstMap    map[string][]byte
+	strConstAdrMap map[string]uint16
+	adrMemPointer  uint16
+	CoreMemory     []uint16
+	lineCount      int
+	homeColunm     int
 }
 
 func (asm *Assembler) Assemble(homeColumn int, CoreMemory []uint16, asmCmd string, CoreDebugMap map[int]string) bool {
@@ -52,6 +54,9 @@ func (asm *Assembler) Assemble(homeColumn int, CoreMemory []uint16, asmCmd strin
 
 	asm.shiftMap = make(map[string]uint16)
 	asm.flagMap = make(map[string]uint16)
+	asm.strConstMap = make(map[string][]byte)
+	asm.strConstAdrMap = make(map[string]uint16)
+
 	asm.adrMemPointer = 0
 
 	asm.loadOpCodeMap()
@@ -257,6 +262,27 @@ func (asm *Assembler) passTwo() bool {
 
 	}
 	if okPassTwo {
+
+		asm.docFile.WriteString("\n")
+		asm.docFile.WriteString("\n")
+
+		for key, value := range asm.strConstMap {
+			tmpString := adjustStringLength(key, 20, "append")
+			asm.docFile.WriteString(tmpString + "   DSTRING ")
+			asm.docFile.WriteString(fmt.Sprintf("%s  ", value))
+			asm.docFile.WriteString("\n")
+		}
+
+		for key, value := range asm.strConstMap {
+			strConstAdr := asm.strConstAdrMap[key]
+
+			for idx := 0; idx < len(value); idx++ {
+				asm.CoreMemory[strConstAdr] = uint16(value[idx])
+				strConstAdr++
+			}
+			asm.CoreMemory[strConstAdr] = 0
+		}
+
 		fmt.Print(cursor.Hide())
 		fmt.Print(cursor.MoveTo(45, 140))
 		fmt.Print("                                                          ")
@@ -573,7 +599,32 @@ func (asm *Assembler) passOne() bool {
 				asm.outputErrorMsg(statement, "Invalid statement. line ")
 			}
 
+		} else if statementLength >= 2 && statement[1] == "DSTRING" {
+
+			labHi := statement[0] + "HI"
+			adrHi := asm.adrMemPointer >> 8
+			labLo := statement[0] + "LO"
+			adrLo := asm.adrMemPointer & 0x00FF
+			asm.labelMap[labHi] = adrHi
+			asm.labelMap[labLo] = adrLo
+
+			asm.strConstAdrMap[statement[0]] = asm.adrMemPointer
+
+			strconst := strings.Join(statement[2:], " ")
+			asm.strConstMap[statement[0]] = []byte(strconst)
+			strConstLen := len(strconst)
+			if strConstLen > 0 {
+				strConstLen++
+			} else {
+				okPassOne = false
+				asm.outputErrorMsg(statement, "DSTRING is empty. line  ")
+			}
+
+			asm.adrMemPointer += uint16(strConstLen)
+			asm.adrMemPointer++
+
 		} else if statementLength >= 2 && statementLength <= 5 {
+
 			if strings.HasSuffix(statement[0], ":") {
 				_, ok := asm.opCodeMap[statement[1]]
 				if ok {
@@ -596,6 +647,7 @@ func (asm *Assembler) passOne() bool {
 					}
 					key := strings.TrimSuffix(statement[0], ":")
 					asm.byteMap[key] = uint16(byteValue)
+
 				} else {
 					okPassOne = false
 					asm.outputErrorMsg(statement, "Invalid statement. line  ")
@@ -615,6 +667,7 @@ func (asm *Assembler) passOne() bool {
 		}
 	}
 	readFile.Close()
+	//fmt.Println("okPassOne:", okPassOne)
 	return okPassOne
 }
 
@@ -745,6 +798,7 @@ func (asm *Assembler) loadOpcClassMap() {
 	asm.opcClassMap["CALL"] = "1args"
 	asm.opcClassMap["RTRN"] = "0args"
 	asm.opcClassMap["DBYTE"] = "skip"
+	asm.opcClassMap["DSTRING"] = "skip"
 
 }
 
