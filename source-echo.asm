@@ -14,7 +14,7 @@ char*:     dbyte  42
 buffer:lo:           dbyte  255
 buffer:hi:           dbyte  66
 
-
+exitEcho:            dstring oh what a wonderful day
 
 start:              ldi     r0 ZERO
                     not     r0 r0
@@ -50,6 +50,6 @@ readCmdLine:        ldi     r0 buffer:hi
                     out     r0
                     halt
 
- exitEcho:          dstring oh what a wonderful day
+ 
 
 

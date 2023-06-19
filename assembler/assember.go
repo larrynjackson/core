@@ -188,6 +188,16 @@ func (asm *Assembler) passTwo() bool {
 	asm.docFile.WriteString("\n")
 	asm.docFile.WriteString("\n")
 
+	for key, value := range asm.strConstMap {
+		tmpString := adjustStringLength(key, 15, "prepend")
+		tmpString = adjustStringLength(tmpString, 40, "append")
+		asm.docFile.WriteString(tmpString + "   DSTRING ")
+		asm.docFile.WriteString(fmt.Sprintf("%s  ", value))
+		asm.docFile.WriteString("\n")
+	}
+	asm.docFile.WriteString("\n")
+	asm.docFile.WriteString("\n")
+
 	asm.lineCount = 0
 	asm.adrMemPointer = 0
 
@@ -262,16 +272,6 @@ func (asm *Assembler) passTwo() bool {
 
 	}
 	if okPassTwo {
-
-		asm.docFile.WriteString("\n")
-		asm.docFile.WriteString("\n")
-
-		for key, value := range asm.strConstMap {
-			tmpString := adjustStringLength(key, 20, "append")
-			asm.docFile.WriteString(tmpString + "   DSTRING ")
-			asm.docFile.WriteString(fmt.Sprintf("%s  ", value))
-			asm.docFile.WriteString("\n")
-		}
 
 		for key, value := range asm.strConstMap {
 			strConstAdr := asm.strConstAdrMap[key]
@@ -601,27 +601,14 @@ func (asm *Assembler) passOne() bool {
 
 		} else if statementLength >= 2 && statement[1] == "DSTRING" {
 
-			labHi := statement[0] + "HI"
-			adrHi := asm.adrMemPointer >> 8
-			labLo := statement[0] + "LO"
-			adrLo := asm.adrMemPointer & 0x00FF
-			asm.labelMap[labHi] = adrHi
-			asm.labelMap[labLo] = adrLo
-
-			asm.strConstAdrMap[statement[0]] = asm.adrMemPointer
-
 			strconst := strings.Join(statement[2:], " ")
 			asm.strConstMap[statement[0]] = []byte(strconst)
 			strConstLen := len(strconst)
-			if strConstLen > 0 {
-				strConstLen++
-			} else {
+
+			if strConstLen == 0 {
 				okPassOne = false
 				asm.outputErrorMsg(statement, "DSTRING is empty. line  ")
 			}
-
-			asm.adrMemPointer += uint16(strConstLen)
-			asm.adrMemPointer++
 
 		} else if statementLength >= 2 && statementLength <= 5 {
 
@@ -667,7 +654,25 @@ func (asm *Assembler) passOne() bool {
 		}
 	}
 	readFile.Close()
-	//fmt.Println("okPassOne:", okPassOne)
+
+	for key, byteArray := range asm.strConstMap {
+
+		labHi := key + "HI"
+		adrHi := asm.adrMemPointer >> 8
+		labLo := key + "LO"
+		adrLo := asm.adrMemPointer & 0x00FF
+		asm.labelMap[labHi] = adrHi
+		asm.labelMap[labLo] = adrLo
+
+		asm.strConstAdrMap[key] = asm.adrMemPointer
+
+		strConstLen := len(byteArray)
+		strConstLen++
+
+		asm.adrMemPointer += uint16(strConstLen)
+		asm.adrMemPointer++
+	}
+
 	return okPassOne
 }
 

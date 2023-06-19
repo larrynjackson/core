@@ -109,7 +109,7 @@ bufferNext:lo:       dbyte  254
 buffer:lo:           dbyte  255
 buffer:hi:           dbyte  66
 
-
+exitCalc:            dstring oh what a wonderful day
 
 start:               ldi     r0 ZERO
                      not     r0 r0
@@ -1292,7 +1292,7 @@ initBuffer:          ldi    r0 zero
                     
                     RTRN
 
-exitCalc:          dstring oh what a wonderful day
+
 
 
 
